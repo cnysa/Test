@@ -1,20 +1,28 @@
 package com.weixin.test;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.weixin.gacl.domain.Admin;
-import com.weixin.gacl.mapping.UserMapperI;
-import com.weixin.gacl.util.MyBatisUtil;
+import com.weixin.gacl.servece.AdminService;
 
 public class Test1 {
 
+	private AdminService umi;
+	
+	 @Before
+	 public void before(){
+      //使用"spring.xml"和"spring-mybatis.xml"这两个配置文件创建Spring上下文
+		 ApplicationContext ac = new FileSystemXmlApplicationContext(new String[]{"WebContent/WEB-INF/conf/spring/spring-main.xml",
+				 "WebContent/WEB-INF/conf/spring/weixin-service-beans.xml"});
+     //从Spring容器中根据bean的id取出我们要使用的userService对象
+     umi = (AdminService) ac.getBean("userService");
+	 }
+
+	 
 //	@Test
 //	public void run() throws IOException {
 //        //mybatis的配置文件
@@ -42,66 +50,67 @@ public class Test1 {
 	
 	@Test
     public void testAdd(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
-        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
-        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
+//        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+//        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+//        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
         Admin Admin = new Admin();
-        Admin.setUsername("admin111");
+        Admin.setUsername("admin222");
         Admin.setPassword("aaabbb");
-        int add = mapper.add(Admin);
+        umi.addUser(Admin);
+//        int add = mapper.add(Admin);
         //使用SqlSession执行完SQL之后需要关闭SqlSession
-        sqlSession.close();
-        System.out.println(add);
+//        sqlSession.close();
+//        System.out.println(add);
     }
     
-    @Test
-    public void testUpdate(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
-        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
-        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
-        Admin user = new Admin();
-        user.setUsername("admin111");;
-        user.setPassword("111111");
-        //执行修改操作
-        int retResult = mapper.update(user);
-        //使用SqlSession执行完SQL之后需要关闭SqlSession
-        sqlSession.close();
-        System.out.println(retResult);
-    }
+//    @Test
+//    public void testUpdate(){
+//        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+//        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+//        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
+//        Admin user = new Admin();
+//        user.setUsername("admin111");;
+//        user.setPassword("111111");
+//        //执行修改操作
+//        int retResult = mapper.update(user);
+//        //使用SqlSession执行完SQL之后需要关闭SqlSession
+//        sqlSession.close();
+//        System.out.println(retResult);
+//    }
     
-    @Test
-    public void testDelete(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
-        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
-        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
-        //执行删除操作
-        int retResult = mapper.deleteById(7);
-        //使用SqlSession执行完SQL之后需要关闭SqlSession
-        sqlSession.close();
-        System.out.println(retResult);
-    }
+//    @Test
+//    public void testDelete(){
+//        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
+//        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+//        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
+//        //执行删除操作
+//        int retResult = mapper.deleteById(7);
+//        //使用SqlSession执行完SQL之后需要关闭SqlSession
+//        sqlSession.close();
+//        System.out.println(retResult);
+//    }
     
-    @Test
-    public void testGetUser(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
-        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
-        //执行查询操作，将查询结果自动封装成User返回
-        Admin user = mapper.getById(8);
-        //使用SqlSession执行完SQL之后需要关闭SqlSession
-        sqlSession.close();
-        System.out.println(user);
-    }
+//    @Test
+//    public void testGetUser(){
+//        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+//        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+//        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
+//        //执行查询操作，将查询结果自动封装成User返回
+//        Admin user = mapper.getById(8);
+//        //使用SqlSession执行完SQL之后需要关闭SqlSession
+//        sqlSession.close();
+//        System.out.println(user);
+//    }
     
-    @Test
-    public void testGetAll(){
-        SqlSession sqlSession = MyBatisUtil.getSqlSession();
-        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
-        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
-        //执行查询操作，将查询结果自动封装成List<User>返回
-        List<Admin> lstUsers = mapper.getAll();
-        //使用SqlSession执行完SQL之后需要关闭SqlSession
-        sqlSession.close();
-        System.out.println(lstUsers);
-    }
+//    @Test
+//    public void testGetAll(){
+//        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+//        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+//        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
+//        //执行查询操作，将查询结果自动封装成List<User>返回
+//        List<Admin> lstUsers = mapper.getAll();
+//        //使用SqlSession执行完SQL之后需要关闭SqlSession
+//        sqlSession.close();
+//        System.out.println(lstUsers);
+//    }
 }

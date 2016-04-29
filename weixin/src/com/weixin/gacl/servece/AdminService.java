@@ -9,6 +9,7 @@ public interface AdminService {
      */
     void addUser(Admin user);
     
+    Admin verifLofin(String username);
     /**
      * 根据用户id获取用户
      * @param userId

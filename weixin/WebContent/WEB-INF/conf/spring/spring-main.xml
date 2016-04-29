@@ -23,7 +23,7 @@
 	        </list>  
 	    </property>  
 	</bean>
-
+	
 	<!-- HandlerAdapter -->
 	<!-- SimpleControllerHandlerAdapter： -->
 	<!-- 表示所有实现了org.springframework.web.servlet.mvc.Controller接口的Bean -->
@@ -36,14 +36,15 @@
 	<!-- viewClass：JstlView表示JSP模板页面需要使用JSTL标签库，classpath中必须包含jstl的相关jar包； -->
 	<!--     prefix和suffix：查找视图页面的前缀和后缀（前缀[逻辑视图名]后缀）， -->
 	<!--     比如传进来的逻辑视图名为hello，则该该jsp视图页面应该存放在“WEB-INF/jsp/hello.jsp”； -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
-	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>  
-	    <property name="prefix" value="/WEB-INF/jsp/"/>  
-	    <property name="suffix" value=".jsp"/>  
-	</bean> 
+<!-- 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">   -->
+<!-- 	    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>   -->
+<!-- 	    <property name="prefix" value="/WEB-INF/jsp/"/>   -->
+<!-- 	    <property name="suffix" value=".jsp"/>   -->
+<!-- 	</bean>  -->
 
 	<!-- 处理器 -->  
-	<bean name="/hello" class="com.weixin.web.controller.HelloWorldController"/>
+<!-- 	<bean name="/hello" class="com.weixin.web.action.HelloWorldController"/> -->
+	<bean name="wxAdminManager" class="com.weixin.web.manager.WxAdminManagerImpl"/>
 
 	<!-- 拦截器 -->
 	<bean id="handlerInterceptor1" class="com.weixin.web.interceptor.HandlerInterceptor1"/>
@@ -51,5 +52,38 @@
 	<!-- 引入db.properties属性文件 WEB-INF/conf/spring-->
    	<context:property-placeholder location="/WEB-INF/conf/spring/db.properties" />
    	<!-- 自动扫描(自动注入)，扫描me.gacl.service这个包以及它的子包所有使用@Service注解标注的类 -->
-   	<context:component-scan base-package="com.weixin.gacl.impl" />
+   	<context:component-scan base-package="com.weixin" />
+   	<mvc:resources location="/" mapping="/resources/**"/>
+   		<!-- 模板信息设置 -->
+    <bean id="velocityConfigurer"
+        class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath"  value="/WEB-INF/views" /><!-- 設置模板防止位置-->
+        <property name="configLocation" value="WEB-INF/conf/velocity.properties" />
+<!--         <property name="velocityProperties"> -->
+<!--             <props> -->
+<!--                 <prop key="directive.foreach.counter.name">loopCounter</prop> -->
+<!--                 <prop key="directive.foreach.counter.initial.value">0</prop> -->
+<!--                 <prop key="input.encoding">UTF-8</prop>指定模板引擎进行模板处理的编码 -->
+<!--                 <prop key="output.encoding">UTF-8</prop>指定输出流的编码 -->
+<!--             </props> -->
+<!--         </property> -->
+    </bean>
+	
+	<!-- 设置视图解析工具 -->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name= "cache" value= "true"/>  
+        <property name= "prefix" value= "/"/> 
+        <property name="suffix" value=".vm" />
+        <!-- 避免乱码 -->
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="toolboxConfigLocation" value="/WEB-INF/conf/tools.xml" />  
+        <property name="layoutUrl" value="/layout/layout.vm" />
+        <property name="dateToolAttribute" value="dateTool" /><!--日期函数名称-->
+        <property name="numberToolAttribute" value="numberTool" /><!--数字函数名称-->
+        <property name="exposeSpringMacroHelpers" value="true" /><!--是否使用spring对宏定义的支持-->
+        <property name="exposeRequestAttributes" value="true" /><!--是否开放request属性-->
+        <property name="requestContextAttribute" value="rc"/><!--request属性引用名称--> 
+        <property name="exposeSessionAttributes" value="true" />
+    </bean>
 </beans>

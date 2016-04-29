@@ -31,4 +31,9 @@ public class AdminServiceImpl implements AdminService{
     public Admin getAdminByUsername(String userId) {
         return userMapper.selectByPrimaryKey(userId);
     }
+
+	@Override
+	public Admin verifLofin(String username) {
+		return userMapper.selectByPrimaryKey(username);
+	}
 }

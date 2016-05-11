@@ -3,7 +3,6 @@ package com.weixin.test;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.weixin.gacl.domain.Admin;
@@ -16,7 +15,8 @@ public class Test1 {
 	 @Before
 	 public void before(){
       //使用"spring.xml"和"spring-mybatis.xml"这两个配置文件创建Spring上下文
-		 ApplicationContext ac = new FileSystemXmlApplicationContext(new String[]{"WebContent/WEB-INF/conf/spring/spring-main.xml",
+		 @SuppressWarnings("resource")
+		ApplicationContext ac = new FileSystemXmlApplicationContext(new String[]{"WebContent/WEB-INF/conf/spring/spring-main.xml",
 				 "WebContent/WEB-INF/conf/spring/weixin-service-beans.xml"});
      //从Spring容器中根据bean的id取出我们要使用的userService对象
      umi = (AdminService) ac.getBean("userService");

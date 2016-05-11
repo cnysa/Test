@@ -53,7 +53,9 @@
    	<context:property-placeholder location="/WEB-INF/conf/spring/db.properties" />
    	<!-- 自动扫描(自动注入)，扫描me.gacl.service这个包以及它的子包所有使用@Service注解标注的类 -->
    	<context:component-scan base-package="com.weixin" />
-   	<mvc:resources location="/" mapping="/resources/**"/>
+   	<mvc:resources location="/js/" mapping="/js/**"/>
+   	<mvc:resources location="/css/" mapping="/css/**"/>
+   	<mvc:resources location="/images/" mapping="/images/**"/>
    		<!-- 模板信息设置 -->
     <bean id="velocityConfigurer"
         class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">

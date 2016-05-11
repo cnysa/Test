@@ -1,13 +1,11 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Spring MVC and Velocity</title>
-    </head>
-    <body>
-        <h1>Spring MVC and Velocity</h1>
-
-        $screen_content
-
-        <hr />
-        Copyright &copy 2014 lm
-    </body>
+<head>
+<meta charset="utf-8"/>
+	$screen_content
+ <dd>
+  <p>© 2015-2016 gdayq 版权所有</p>
+ </dd>
+</dl>
+</body>
 </html>

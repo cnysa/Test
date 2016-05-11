@@ -1,0 +1,25 @@
+
+<title>后台登录</title>
+<meta name="author" content="DeathGhost" />
+<link rel="stylesheet" type="text/css" href='$rc.contextPath/css/style.css' />
+<style>
+body{height:100%;background:#16a085;overflow:hidden;}
+canvas{z-index:-1;position:absolute;}
+</style>
+<script src='$rc.contextPath/js/jquery.js'></script>
+<script src='$rc.contextPath/js/verificationNumbers.js'></script>
+<script src='$rc.contextPath/js/Particleground.js'></script>
+<script>
+$(document).ready(function() {
+  //粒子背景特效
+  $('body').particleground({
+    dotColor: '#5cbdaa',
+    lineColor: '#5cbdaa'
+  });
+</script>
+</head>
+<body>
+<dl class="admin_login">
+ <dt>
+  <strong>$message</strong>
+ </dt>

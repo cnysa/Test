@@ -1,0 +1,47 @@
+#set($layout = "layout/home.vm")
+#set($currentPage="1")
+<section class="rt_wrap content mCustomScrollbar">
+<div>
+ <table class="table menuList">
+ </table>
+</div>
+</section>
+<script type = "text/javascript" >
+$(function () {
+	var list = $!{menu};
+	var str="  <tr>"+
+		   "<th>菜单按钮</th>"+
+		   "<th>菜单名字</th>"+
+		   "<th>菜单类型</th>"+
+		   "<th>key</th>"+
+		   "<th>url</th>"+
+		   "<th>操作</th>"+
+		  "</tr>";
+	for(var i=0;i<list.menu.button.length;i++){
+		str += "<tr>"+
+			   "<th class='center' rowspan='"+list.menu.button[i].sub_button.length+"'>" + list.menu.button[i].name + "</td>"+
+			   "<td>"+list.menu.button[i].sub_button[0].name+"</td>"+
+			   "<td>"+list.menu.button[i].sub_button[0].type+"</td>";
+			   if(list.menu.button[i].sub_button[0].type == "click"){
+				   str += "<td>"+list.menu.button[i].sub_button[0].key+"</td><td></td><td></td>";
+			   }else if(list.menu.button[i].sub_button[0].type == "view"){
+				   str += "<td></td><td>"+list.menu.button[i].sub_button[0].url+"</td>"
+				   +"<td class='center'><a class='inner_btn'>编辑</a></td>";
+			   }
+			   str += "</tr>";
+			  for(var j=1;j<list.menu.button[i].sub_button.length;j++){
+				  str += "<tr>"+
+				   "<td>"+list.menu.button[i].sub_button[j].name+"</td>"+
+				   "<td>"+list.menu.button[i].sub_button[j].type+"</td>";
+				  if(list.menu.button[i].sub_button[j].type == "click"){
+					   str += "<td>"+list.menu.button[i].sub_button[j].key+"</td><td></td><td></td>";
+				   }else if(list.menu.button[i].sub_button[j].type == "view"){
+					   str += "<td></td><td>"+list.menu.button[i].sub_button[j].url+"</td>"+
+					   "<td class='center'><a class='inner_btn'>编辑</a></td>";
+				   }
+				   str += "</tr>";
+			  }
+	}
+	$(".menuList").html(str);
+});
+</script>

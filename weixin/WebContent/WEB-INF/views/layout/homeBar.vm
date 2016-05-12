@@ -1,0 +1,22 @@
+<aside class="lt_aside_nav content mCustomScrollbar">
+ <h2><a href="index.php">起始页</a></h2>
+ <ul>
+  <li>
+   <dl>
+    <dt>功能</dt>
+    <!--当前链接则添加class:active-->
+    <dd><a href="$rc.contextPath/menuManager.htm" #if($currentPage==1) class="active" #end>自定义菜单</a></dd>
+   </dl>
+  </li>
+  <li>
+   <dl>
+    <dt>管理</dt>
+    <dd><a href="#">消息管理</a></dd>
+    <dd><a href="#">用户管理</a></dd>
+   </dl>
+  </li>
+  <li>
+   <p class="btm_infor">© 小张 版权所有</p>
+  </li>
+ </ul>
+</aside>

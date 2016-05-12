@@ -1,8 +1,5 @@
 package com.weixin.web.action;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.weixin.web.manager.interfaces.WxAdminManager;
-import com.weixin.web.util.VerifyCode;
-
-import freemarker.template.utility.StringUtil;
+import com.weixin.web.util.UserInSession;
 
 @Controller
 public class LoginAction extends BaseAction{
@@ -39,6 +34,12 @@ public class LoginAction extends BaseAction{
 			final ModelMap model){
 		log.info("id:"+id);
 		log.info("password:"+password);
+		UserInSession u = null;
+		
+		u = getLoginUser();
+		if (u != null && u.getLogged()) {
+			return  "home"; 
+		}
 		if(StringUtils.isEmpty(id.trim()) || StringUtils.isEmpty(password.trim())){
 			model.put("err", "用户名或密码不能为空");
 			return "login";
@@ -56,8 +57,26 @@ public class LoginAction extends BaseAction{
 			model.put("err", "用户名或密码不正确");
 			return "login";
 		}
+		u = new UserInSession();
+		u.setId(id);
+		u.setPassword(password);
+		u.setLogged(true);
+		getSession().setAttribute("userInSession", u);
 		
 		return "home";
 	}
+	
+	@RequestMapping(value="/logged")
+	public String logged(final ModelMap model){
+		UserInSession u = null;
+		u=getLoginUser();
+		if (u != null && u.getLogged()) {
+			u.setLogged(false);
+			getSession().setAttribute("userInSession", null);
+		}
+		return "login";
+	}
+	
+	
 	
 }

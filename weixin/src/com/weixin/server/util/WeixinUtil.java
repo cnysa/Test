@@ -36,6 +36,8 @@ public class WeixinUtil {
 	public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
 	// 菜单创建（POST） 限100（次/天）
 	public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
+	//菜单查询
+	public static String menu_query_url = "https://api.weixin.qq.com/cgi-bin/menu/get?access_token=ACCESS_TOKEN";
 	
 	/**
 	 * 获取access_token
@@ -87,12 +89,16 @@ public class WeixinUtil {
 			URL url = new URL(requestUrl);
 			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
 			httpUrlConn.setSSLSocketFactory(ssf);
-
-			httpUrlConn.setDoOutput(true);
-			httpUrlConn.setDoInput(true);
-			httpUrlConn.setUseCaches(false);
+			//在android中必须将此项设置为false 
+			httpUrlConn.setDoOutput(true);//允许输出流，即允许上传
+			httpUrlConn.setDoInput(true);//允许输入流，即允许下载
+			httpUrlConn.setUseCaches(false);//不使用缓冲
 			// 设置请求方式（GET/POST）
-			httpUrlConn.setRequestMethod(requestMethod);
+//			if(null!=requestMethod && !requestMethod.equals("")) {
+				httpUrlConn.setRequestMethod(requestMethod);
+//			}else{
+//				httpUrlConn.setRequestMethod("GET"); //使用get请求
+//			}
 
 			if ("GET".equalsIgnoreCase(requestMethod))
 				httpUrlConn.connect();
@@ -158,6 +164,23 @@ public class WeixinUtil {
 			}
 		}
 
+		return result;
+	}
+	
+	public static String queryMenu(String accessToken){
+		String result = null;
+		String url = menu_query_url.replace("ACCESS_TOKEN", accessToken);
+		JSONObject jsonObject = httpRequest(url, "GET", null);
+		log.info("return::::"+jsonObject.toString());
+		if (null != jsonObject) {
+			if (null != jsonObject.get("errcode")) {
+//				result = String.valueOf(jsonObject.getInt("errcode"));
+				result = "0";
+				log.error("查询菜单失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
+			}else{
+				result = jsonObject.toString();
+			}
+		}
 		return result;
 	}
 }

@@ -11,6 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.weixin.web.util.UserInSession;
+
 public class BaseAction {
     
     protected final Log log = LogFactory.getLog(getClass());
@@ -34,6 +36,23 @@ public class BaseAction {
     	ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes();
         return attrs.getResponse();
+    }
+    
+    /**
+     * 
+     * @Title: getLoginUser 
+     * @Description: (获取登录用户信息) 
+     * @param @return    设定文件 
+     * @return UserInSession    返回类型 
+     * @throws
+     */
+    public UserInSession getLoginUser() {
+        UserInSession userInSession = (UserInSession) BaseAction.getRequest()
+                .getSession(true).getAttribute("userInSession");
+        if (userInSession != null && userInSession.getLogged())
+            return userInSession;
+        else
+            return null;
     }
     
     public String getIpAddress() {

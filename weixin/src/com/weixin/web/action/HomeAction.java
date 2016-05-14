@@ -7,8 +7,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.weixin.server.Manager.MenuManager;
-import com.weixin.server.pojo.AccessToken;
-import com.weixin.server.threads.TokenThread;
+import com.weixin.server.Manager.pojo.AccessToken;
+import com.weixin.server.servlets.threads.TokenThread;
 import com.weixin.server.util.WeixinUtil;
 
 @Controller(value="homeAction")

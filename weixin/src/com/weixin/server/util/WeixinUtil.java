@@ -16,8 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.weixin.server.Manager.MyX509TrustManager;
-import com.weixin.server.pojo.AccessToken;
-import com.weixin.server.pojo.Menu;
+import com.weixin.server.Manager.pojo.AccessToken;
+import com.weixin.server.Manager.pojo.Menu;
 
 import net.sf.json.JSONException;
 import net.sf.json.JSONObject;

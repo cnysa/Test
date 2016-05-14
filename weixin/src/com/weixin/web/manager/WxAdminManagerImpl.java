@@ -2,14 +2,14 @@ package com.weixin.web.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.weixin.gacl.domain.Admin;
-import com.weixin.gacl.servece.AdminService;
+import com.weixin.gacl.manager.interfaces.AdminManager;
+import com.weixin.gacl.mapping.beans.Admin;
 import com.weixin.web.manager.interfaces.WxAdminManager;
 
 public class WxAdminManagerImpl implements WxAdminManager{
 
 	@Autowired
-	private AdminService asi;
+	private AdminManager asi;
 	
 	@Override
 	public boolean verifLofin(String username,String password) {

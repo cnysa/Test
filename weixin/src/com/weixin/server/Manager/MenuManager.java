@@ -1,10 +1,10 @@
 package com.weixin.server.Manager;
 
-import com.weixin.server.pojo.Button;
-import com.weixin.server.pojo.CommonButton;
-import com.weixin.server.pojo.ComplexButton;
-import com.weixin.server.pojo.Menu;
-import com.weixin.server.pojo.ViewButton;
+import com.weixin.server.Manager.pojo.Button;
+import com.weixin.server.Manager.pojo.CommonButton;
+import com.weixin.server.Manager.pojo.ComplexButton;
+import com.weixin.server.Manager.pojo.Menu;
+import com.weixin.server.Manager.pojo.ViewButton;
 import com.weixin.server.util.EnumManager;
 
 /**

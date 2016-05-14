@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.weixin.gacl.servece.AdminService;
+import com.weixin.gacl.manager.interfaces.AdminManager;
 
 @Controller(value="helloWorldController")
 public class HelloWorldController{
 	private static Logger log = LoggerFactory.getLogger(HelloWorldController.class);
 	@Autowired
-	private AdminService umi;
+	private AdminManager umi;
 	@RequestMapping(value="/hello1")
 	public String helloWorld(final ModelMap model){
 		log.info("=======hello");

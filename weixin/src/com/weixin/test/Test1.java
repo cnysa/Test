@@ -5,12 +5,12 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.weixin.gacl.domain.Admin;
-import com.weixin.gacl.servece.AdminService;
+import com.weixin.gacl.manager.interfaces.AdminManager;
+import com.weixin.gacl.mapping.beans.Admin;
 
 public class Test1 {
 
-	private AdminService umi;
+	private AdminManager umi;
 	
 	 @Before
 	 public void before(){
@@ -19,7 +19,7 @@ public class Test1 {
 		ApplicationContext ac = new FileSystemXmlApplicationContext(new String[]{"WebContent/WEB-INF/conf/spring/spring-main.xml",
 				 "WebContent/WEB-INF/conf/spring/weixin-service-beans.xml"});
      //从Spring容器中根据bean的id取出我们要使用的userService对象
-     umi = (AdminService) ac.getBean("userService");
+     umi = (AdminManager) ac.getBean("userService");
 	 }
 
 	 

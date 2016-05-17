@@ -5,22 +5,19 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
-import com.weixin.gacl.manager.interfaces.AdminManager;
 import com.weixin.gacl.mapping.beans.Admin;
 
 public class Test1 {
-
-	private AdminManager umi;
 	
-	 @Before
-	 public void before(){
-      //使用"spring.xml"和"spring-mybatis.xml"这两个配置文件创建Spring上下文
-		 @SuppressWarnings("resource")
-		ApplicationContext ac = new FileSystemXmlApplicationContext(new String[]{"WebContent/WEB-INF/conf/spring/spring-main.xml",
-				 "WebContent/WEB-INF/conf/spring/weixin-service-beans.xml"});
-     //从Spring容器中根据bean的id取出我们要使用的userService对象
-     umi = (AdminManager) ac.getBean("userService");
-	 }
+//	 @Before
+//	 public void before(){
+//      //使用"spring.xml"和"spring-mybatis.xml"这两个配置文件创建Spring上下文
+//		 @SuppressWarnings("resource")
+//		ApplicationContext ac = new FileSystemXmlApplicationContext(new String[]{"WebContent/WEB-INF/conf/spring/spring-main.xml",
+//				 "WebContent/WEB-INF/conf/spring/weixin-service-beans.xml"});
+//     //从Spring容器中根据bean的id取出我们要使用的userService对象
+//     umi = (AdminManager) ac.getBean("userService");
+//	 }
 
 	 
 //	@Test
@@ -51,12 +48,12 @@ public class Test1 {
 	@Test
     public void testAdd(){
 //        SqlSession sqlSession = MyBatisUtil.getSqlSession(true);
-//        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
-//        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
-        Admin Admin = new Admin();
-        Admin.setUsername("admin222");
-        Admin.setPassword("aaabbb");
-        umi.addUser(Admin);
+////        //得到UserMapperI接口的实现类对象，UserMapperI接口的实现类对象由sqlSession.getMapper(UserMapperI.class)动态构建出来
+////        UserMapperI mapper = sqlSession.getMapper(UserMapperI.class);
+//        Admin Admin = new Admin();
+//        Admin.setUsername("admin222");
+//        Admin.setPassword("aaabbb");
+//        umi.addUser(Admin);
 //        int add = mapper.add(Admin);
         //使用SqlSession执行完SQL之后需要关闭SqlSession
 //        sqlSession.close();

@@ -9,7 +9,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.weixin.web.manager.interfaces.WxAdminManager;
+import com.weixin.gacl.manager.interfaces.AdminManager;
 import com.weixin.web.util.UserInSession;
 
 @Controller
@@ -17,7 +17,7 @@ public class LoginAction extends BaseAction{
 	Logger logger = LoggerFactory.getLogger(LoginAction.class);
 	
 	@Autowired
-	private WxAdminManager wxAdminManagerImpl;
+	private AdminManager adminManagerImpl;
 	
 	@RequestMapping(value="/loginPage")
 	public String loginPage(
@@ -53,7 +53,7 @@ public class LoginAction extends BaseAction{
 			model.put("err", "验证码不正确");
 			return "login";
 		}
-		if(!wxAdminManagerImpl.verifLofin(id, password)){
+		if(!adminManagerImpl.verifLofin(id, password)){
 			model.put("err", "用户名或密码不正确");
 			return "login";
 		}

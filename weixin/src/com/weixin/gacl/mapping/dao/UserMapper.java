@@ -17,7 +17,6 @@ import com.weixin.gacl.mapping.beans.User;
  * @date 2016年5月14日 下午4:58:04
  */
 public interface UserMapper {
-	
     int deleteByPrimaryKey(String wxUserId);
 
     int insert(User record);

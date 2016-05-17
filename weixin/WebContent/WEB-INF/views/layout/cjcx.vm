@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+<link rel="stylesheet" href="js/dist/lib/weui.css">
+<link rel="stylesheet" href="js/dist/lib/weui.min.css">
+<link rel="stylesheet" href="js/dist/css/jquery-weui.css">
+<script src="js/dist/lib/jquery-2.1.4.js"></script>
+<script src="js/dist/js/jquery-weui.js"></script>
+</head>
+	$screen_content
+  <div class="weui_cells_tips" style="text-align:center;">© 2015-2016 zhanggd 版权所有</div>
+</body>
+</html>

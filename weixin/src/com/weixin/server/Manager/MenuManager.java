@@ -45,20 +45,20 @@ public class MenuManager {
 		btn14.setType("view");
 		btn14.setUrl("http://it.qlu.edu.cn/list.php?catid=53");
 
-		CommonButton btn21 = new CommonButton();
-		btn21.setName(EnumManager.MENU_Xl.getRespMsg());
-		btn21.setType("click");
-		btn21.setKey(EnumManager.MENU_Xl.getRespCode());
+//		CommonButton btn21 = new CommonButton();
+//		btn21.setName(EnumManager.MENU_Xl.getRespMsg());
+//		btn21.setType("click");
+//		btn21.setKey(EnumManager.MENU_Xl.getRespCode());
 
 		CommonButton btn22 = new CommonButton();
 		btn22.setName(EnumManager.MENU_ZYJS.getRespMsg());
 		btn22.setType("click");
 		btn22.setKey(EnumManager.MENU_ZYJS.getRespCode());
 
-		CommonButton btn23 = new CommonButton();
+		ViewButton btn23 = new ViewButton();
 		btn23.setName(EnumManager.MENU_CJCX.getRespMsg());
-		btn23.setType("click");
-		btn23.setKey(EnumManager.MENU_CJCX.getRespCode());
+		btn23.setType("view");
+		btn23.setUrl("http://moshangren.imwork.net/weixin/wx_cjcx");
 
 		CommonButton btn24 = new CommonButton();
 		btn24.setName(EnumManager.MENU_YKTCZ.getRespMsg());
@@ -91,7 +91,7 @@ public class MenuManager {
 
 		ComplexButton mainBtn2 = new ComplexButton();
 		mainBtn2.setName("T∞Ô∞Ô");
-		mainBtn2.setSub_button(new Button[] { btn21, btn22, btn23, btn24, btn25 });
+		mainBtn2.setSub_button(new Button[] { btn22, btn23, btn24, btn25 });
 
 		ComplexButton mainBtn3 = new ComplexButton();
 		mainBtn3.setName("T”È¿÷");

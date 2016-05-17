@@ -27,12 +27,12 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
     <bean id="ysSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源以及SQL映射文件 -->
         <property name="dataSource" ref="dataSource" />
-        <property name="mapperLocations" value="classpath:com/weixin/gacl/mapping/*xml" />
+        <property name="mapperLocations" value="classpath:com/weixin/gacl/mapping/xml/*Mapper.xml" />
     </bean>
     <!-- 配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 扫描me.gacl.dao这个包以及它的子包下的所有映射接口类 -->
-        <property name="basePackage" value="com.weixin.gacl.dao" />
+        <property name="basePackage" value="com.weixin.gacl.mapping.dao" />
 <!--         <property name="sqlSessionFactoryBeanName" value="ysSqlSessionFactory"/> -->
     </bean>
     

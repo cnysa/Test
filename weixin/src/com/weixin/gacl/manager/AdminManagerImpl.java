@@ -7,35 +7,18 @@ import com.weixin.gacl.manager.interfaces.AdminManager;
 import com.weixin.gacl.mapping.beans.Admin;
 import com.weixin.gacl.mapping.dao.AdminMapper;
 
-/**
- * 
- * @ClassName: AdminServiceImpl
- * @Description: TODO(管理员操作实现类)
- * @author zhanggd
- * @date 2016年5月14日 下午4:46:23
- */
-@Service("AdminManagerImpl")
+@Service("adminManagerImpl")
 public class AdminManagerImpl implements AdminManager{
+
+	@Autowired
+	private AdminMapper userMapper;//注入dao
 	
-    /**
-     * 使用@Autowired注解标注userMapper变量，
-     * 当需要使用UserMapper时，Spring就会自动注入UserMapper
-     */
-    @Autowired
-    private AdminMapper userMapper;//注入dao
-
-    @Override
-    public void addUser(Admin user) {
-        userMapper.insert(user);
-    }
-
-    @Override
-    public Admin getAdminByUsername(String userId) {
-        return userMapper.selectByPrimaryKey(userId);
-    }
-
 	@Override
-	public Admin verifLofin(String username) {
-		return userMapper.selectByPrimaryKey(username);
+	public boolean verifLofin(String username,String password) {
+		Admin admin = userMapper.selectByPrimaryKey(username);
+		if(admin!=null && admin.getPassword().equals(password))
+			return true;
+		return false;
 	}
+
 }

@@ -20,10 +20,6 @@ public class User {
 
     private String wxUserMm;
 
-    private String wxUserCxcjCookie;
-
-    private String wxUserCxcjCookieTime;
-
     public String getWxUserId() {
         return wxUserId;
     }
@@ -46,21 +42,5 @@ public class User {
 
     public void setWxUserMm(String wxUserMm) {
         this.wxUserMm = wxUserMm == null ? null : wxUserMm.trim();
-    }
-
-    public String getWxUserCxcjCookie() {
-        return wxUserCxcjCookie;
-    }
-
-    public void setWxUserCxcjCookie(String wxUserCxcjCookie) {
-        this.wxUserCxcjCookie = wxUserCxcjCookie == null ? null : wxUserCxcjCookie.trim();
-    }
-
-    public String getWxUserCxcjCookieTime() {
-        return wxUserCxcjCookieTime;
-    }
-
-    public void setWxUserCxcjCookieTime(String wxUserCxcjCookieTime) {
-        this.wxUserCxcjCookieTime = wxUserCxcjCookieTime == null ? null : wxUserCxcjCookieTime.trim();
     }
 }

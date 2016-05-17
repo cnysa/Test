@@ -2,18 +2,13 @@ package com.weixin.web.action;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.weixin.gacl.manager.interfaces.AdminManager;
-
 @Controller(value="helloWorldController")
 public class HelloWorldController{
 	private static Logger log = LoggerFactory.getLogger(HelloWorldController.class);
-	@Autowired
-	private AdminManager umi;
 	@RequestMapping(value="/hello1")
 	public String helloWorld(final ModelMap model){
 		log.info("=======hello");

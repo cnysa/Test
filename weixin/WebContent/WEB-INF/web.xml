@@ -22,16 +22,16 @@
     </init-param>
     <load-on-startup>0</load-on-startup>
   </servlet>
-  <servlet>
-    <display-name>ListensServlet</display-name>
-    <servlet-name>ListensServlet</servlet-name>
-    <servlet-class>com.weixin.server.servlets.ListensServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ListensServlet</servlet-name>
-    <url-pattern>/server</url-pattern>
-  </servlet-mapping>
+<!--   <servlet> -->
+<!--     <display-name>ListensServlet</display-name> -->
+<!--     <servlet-name>ListensServlet</servlet-name> -->
+<!--     <servlet-class>com.weixin.server.servlets.ListensServlet</servlet-class> -->
+<!--     <load-on-startup>1</load-on-startup> -->
+<!--   </servlet> -->
+<!--   <servlet-mapping> -->
+<!--     <servlet-name>ListensServlet</servlet-name> -->
+<!--     <url-pattern>/server</url-pattern> -->
+<!--   </servlet-mapping> -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>

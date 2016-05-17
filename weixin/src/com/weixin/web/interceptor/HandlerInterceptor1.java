@@ -21,14 +21,14 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-		log.info("===========HandlerInterceptor1 preHandle");
+//		log.info("===========HandlerInterceptor1 preHandle");
 		UserInSession userInSession = (UserInSession) request.getSession(true)
                 .getAttribute("userInSession");
 		boolean iscontain = true;
 		String uri = request.getRequestURI(); 
 		String contextPath = request.getContextPath();
 		log.info("url: "+uri);
-		if(uri.contains("css") || uri.contains("images") || uri.contains("js")){
+		if(uri.contains("css") || uri.contains("images") || uri.contains("js") || uri.contains("listen")||uri.contains("wx")){
 			return true;
 		}
 		if(uri.contains("/login")){
@@ -82,14 +82,14 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		log.info("===========HandlerInterceptor1 postHandle");  
+//		log.info("===========HandlerInterceptor1 postHandle");  
 	}
 	
 	@Override
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-		log.info("===========HandlerInterceptor1 afertHandle");  
+//		log.info("===========HandlerInterceptor1 afertHandle");  
 	}
 	
 	/**

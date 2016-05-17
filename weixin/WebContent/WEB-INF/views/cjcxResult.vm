@@ -1,0 +1,30 @@
+#set($layout = "layout/cjcx.vm")
+<body ontouchstart>
+<div class="weui_tab">
+      <div class="weui_navbar">
+        <div class="weui_navbar_item weui_bar_item_on">
+          课程
+        </div>
+        <div class="weui_navbar_item weui_bar_item_on">
+          成绩
+        </div>
+      </div>
+      <div class="weui_tab_bd">
+      	<table  width="100%" cellspacing="20">
+		</table>
+      </div>
+<script type = "text/javascript" >
+$(function () {
+	var html = "";
+	var num =  Number($result[0][0]);
+	#foreach($temp in $result)
+	#if($velocityCount != 1)
+	  		html += "<tr>"+
+		    "<td align='left'>$temp[0]</td>"+
+		    "<td align='left'>"+$temp[1]+"</td>"+
+		  "</tr>";
+	#end
+	#end 
+	$(".weui_tab_bd").find("table").html(html);
+});
+</script>

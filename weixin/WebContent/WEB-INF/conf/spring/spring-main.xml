@@ -33,7 +33,8 @@
 	<!-- <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>  -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/> 
 
-	<bean name="wxAdminManager" class="com.weixin.web.manager.WxAdminManagerImpl"/>
+<!-- 	<bean name="adminManager" class="com.weixin.gacl.manager.AdminManagerImpl"/> -->
+<!-- 	<bean name="userManager" class="com.weixin.gacl.manager.UserManagerImpl"/> -->
 	<!-- 引入db.properties属性文件 WEB-INF/conf/spring-->
    	<context:property-placeholder location="/WEB-INF/conf/spring/db.properties" />
    	<!-- 自动扫描(自动注入)，扫描me.gacl.service这个包以及它的子包所有使用@Service注解标注的类 -->
@@ -41,6 +42,7 @@
    	<mvc:resources location="/js/" mapping="/js/**"/>
    	<mvc:resources location="/css/" mapping="/css/**"/>
    	<mvc:resources location="/images/" mapping="/images/**"/>
+<!--    	<mvc:resources location="/wx/" mapping="/wx/**"/> -->
    		<!-- 模板信息设置 -->
     <bean id="velocityConfigurer"
         class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">

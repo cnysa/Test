@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import com.weixin.gacl.manager.interfaces.UserManager;
 import com.weixin.gacl.mapping.beans.User;
-import com.weixin.gacl.mapping.dao.AdminMapper;
 import com.weixin.gacl.mapping.dao.UserMapper;
 
 /**
@@ -22,20 +21,26 @@ import com.weixin.gacl.mapping.dao.UserMapper;
  * @author zhanggd
  * @date 2016年5月14日 下午5:16:13
  */
-@Service("UserManagerImpl")
+@Service("userManagerImpl")
 public class UserManagerImpl implements UserManager{
 
 	@Autowired
     private UserMapper userMapper;//注入dao
-	
+
 	@Override
-	public void addUser(User user) {
+	public boolean isUser(String username) {
+		User user = userMapper.selectByPrimaryKey(username);
+		if(user != null){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void insertUser(String username) {
+		User user = new User();
+		user.setWxUserId(username);
 		userMapper.insert(user);
 	}
-
-	@Override
-	public User getUser(String wxUserId) {
-		return userMapper.selectByPrimaryKey(wxUserId);
-	}
-
+	
 }

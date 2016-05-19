@@ -1,0 +1,36 @@
+#set($layout = "layout/cjcx.vm")
+<body>
+<div class="weui_cells">
+  
+</div>
+<script type = "text/javascript" >
+$(function () {
+	$.alert("直接回复 #关键字 可以查询相关联系方式");
+	var html = 	"<div class='weui_cell' style='background:#000;color:#FFF'>"+
+			    "<div class='weui_cell_bd weui_cell_primary'>"+
+			    "<p>姓名</p>"+
+			  	"</div>"+
+			  	"<div class='weui_cell_bd'>"+
+			    "联系方式"+
+			  	"</div>"+
+				"</div>";
+	#foreach($temp in $tels)
+		#if($velocityCount%2 == 0)
+	  	  html += "<div class='weui_cell' style='background:#cccccc;'>"+
+	  	#else
+	  	  html += "<div class='weui_cell'>"+
+  		#end
+  		"<div class='weui_cell_bd weui_cell_primary'>"+
+	    "<p>$!temp.telName</p>"+
+	  	"</div>"+
+	  	"<div class='weui_cell_ft'>"+
+	    "$!temp.telNum1"+
+	    #if("$!temp.telNum2" != "")
+			  "<br>$!temp.telNum2"+
+		#end
+	  	"</div>"+
+		"</div>";
+	#end
+	$(".weui_cells").html(html);
+});
+</script>

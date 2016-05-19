@@ -29,22 +29,20 @@ public class TokenThread implements Runnable {
      * @author: zhanggd
      * @date: 2016年3月2日下午7:10:11
      */
-    public void run() {  
+    public void run() {
+    	accessToken = WeixinUtil.getAccessToken(appid, appsecret);
+        if (null != accessToken) {
+			int result = WeixinUtil.createMenu(MenuManager.getMenu(null,null,null,null,null,null), accessToken.getToken());
+			if (0 == result){
+				log.info("菜单创建成功！");
+			}else{
+				log.info("菜单创建失败，错误码：" + result);
+				log.info("服务结束！");
+			}
+		}
         while (true) {  
-            try {  
-                accessToken = WeixinUtil.getAccessToken(appid, appsecret);
-                if (null != accessToken) {
-        			// 调用接口创建菜单
-        			int result = WeixinUtil.createMenu(MenuManager.getMenu(), accessToken.getToken());
-        			// 判断菜单创建结果
-        			if (0 == result){
-        				log.info("菜单创建成功！");
-        			}else{
-        				log.info("菜单创建失败，错误码：" + result);
-        				log.info("服务结束！");
-        				break;
-        			}
-        		}
+            try {
+            	accessToken = WeixinUtil.getAccessToken(appid, appsecret);
                 if (null != accessToken) {  
                     log.info("获取access_token成功，有效时长{}秒 token:{}", accessToken.getExpiresIn(), accessToken.getToken());  
                     log.info("开始休眠7000秒");   
@@ -62,6 +60,6 @@ public class TokenThread implements Runnable {
                 log.error("{}", e);  
             }  
         }  
-    }  
-
+    }
+    
 }

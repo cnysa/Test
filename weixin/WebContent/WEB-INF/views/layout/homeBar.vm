@@ -1,5 +1,5 @@
 <aside class="lt_aside_nav content mCustomScrollbar">
- <h2><a href="index.php">起始页</a></h2>
+ <h2><a href="$rc.contextPath/home.htm">起始页</a></h2>
  <ul>
   <li>
    <dl>
@@ -11,12 +11,11 @@
   <li>
    <dl>
     <dt>管理</dt>
-    <dd><a href="#">消息管理</a></dd>
-    <dd><a href="#">用户管理</a></dd>
+    <dd><a href="$rc.contextPath/telManager.htm">联系方式管理</a></dd>
    </dl>
   </li>
   <li>
-   <p class="btm_infor">© 小张 版权所有</p>
+   <p class="btm_infor">© zhanggd 版权所有</p>
   </li>
  </ul>
 </aside>

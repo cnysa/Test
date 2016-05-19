@@ -1,0 +1,129 @@
+#set($layout = "layout/home.vm")
+#set($currentPage="2")
+<style type="text/css">
+input {border:0;
+	width:100%;
+	text-align:center;
+    }
+.inputName{
+    font-weight:bold;
+}
+</style>
+<section class="rt_wrap content mCustomScrollbar">
+	<div class="rt_content">
+		<section>
+			<div>
+	 			<table class="table telList">
+	 			</table>
+			</div>
+<!-- 			<div style="height:50px"></div> -->
+		</section>
+		<section>
+			<div style="height:500px">
+				<input type="button" value="添加" class="submit_btn" onclick="add();"/>
+			</div>
+		</section>
+	</div>
+</section>
+<script type = "text/javascript" >
+$(function () {
+// 	$(".submi").hide();
+	var str="  <tr>"+
+	   "<th>telName</th>"+
+	   "<th>telNum1</th>"+
+	   "<th>telNum2</th>"+
+	   "<th>操作</th>"+
+	  "</tr>";
+	#foreach($temp in $tels)
+  	  	str += "<tr value='$!temp.telName'>"+
+	    "<td class='in0'><div><input class='inputName' type='text' readOnly='true' value='$!temp.telName' /></div></td>"+
+	  	"<td class='inputs in1'><div><input type='text' readOnly='true' value='$!temp.telNum1' /></div></td>"+
+	    #if("$!temp.telNum2" != "")
+	    	"<td class='inputs in2'><div><input type='text' readOnly='true' value='$!temp.telNum2' /></div></td>"+
+		#else
+			"<td class='inputs in2'><div><input type='text' readOnly='true' value='' /></div></td>"+
+		#end
+		"<td class='center'><a class='inner_btn' isupdata='0' onclick='update(this)'>修改</a>"+
+		"<a class='inner_btn' onclick='del(this)'>删除</a>"+
+		"</td>"+
+	  	"</tr>";
+	#end
+	
+	$(".telList").html(str);
+});
+
+function del(obj){
+	var param = $(obj).parent().parent().attr("value");
+	$.post("$rc.contextPath/telDel.htm",{telName:param},function(data){
+			var datas = jQuery.parseJSON(data);
+			if(datas.status == "1"){
+				$(obj).parent().parent().remove();
+			}
+	     	alert(datas.msg);
+	     	});
+}
+function update(obj){
+	var pare = $(obj).parent().parent();
+	if($(obj).attr("isupdata") == "0"){
+		$(pare).find(".inputs").find("div").find("input").css("border","1px solid").removeAttr("readOnly");
+		$(obj).html("提交").css("color","#000");
+		$(obj).attr("isupdata","1");
+	}else if($(obj).attr("isupdata") == "1"){
+		$(pare).find(".inputs").find("div").find("input").css("border","0").attr("readOnly","true");
+		$(obj).html("修改").css("color","#fff");
+		$(obj).attr("isupdata","0");
+		
+		var telname = $(pare).attr("value");
+		var telnum1 = $(pare).find(".in1").find("div").find("input").val();
+		var telnum2 = $(pare).find(".in2").find("div").find("input").val();
+		$.post("$rc.contextPath/telUpdate.htm",
+				{
+			telName:telname,
+			telNnum1:telnum1,
+			telNnum2:telnum2},
+			function(data){
+			var datas = jQuery.parseJSON(data);
+	     	alert(datas.msg);
+	     	});
+	}
+}
+
+function add(){
+	var str = "<tr>"+
+    "<td class='in0'><div><input class='inputName addIn' type='text' value='' /></div></td>"+
+  	"<td class='inputs in1'><div><input class='addIn' type='text' value='' /></div></td>"+
+	"<td class='inputs in2'><div><input class='addIn' type='text' value='' /></div></td>"+
+	"<td class='center'><a class='inner_btn' isupdata='0' onclick='addSub(this)'>提交</a>"+
+	"</td>"+
+  	"</tr>";
+	$(".telList").append(str);
+	$(".addIn").css("border","1px solid");
+	
+}
+
+function addSub(obj){
+	var pare = $(obj).parent().parent();
+	var str ="<td class='center'><a class='inner_btn' isupdata='0' onclick='update(this)'>修改</a>"+
+		"<a class='inner_btn' onclick='del(this)'>删除</a>"+
+		"</td>";
+	var telName = $(pare).find(".in0").find("div").find("input").val();
+	$(pare).attr("value",telName);
+	$(obj).parent().remove();
+	$(pare).append(str);
+	$(pare).find("td").find("div").find("input").css("border","0").attr("readOnly","true");
+	
+	var telname = $(pare).attr("value");
+	var telnum1 = $(pare).find(".in1").find("div").find("input").val();
+	var telnum2 = $(pare).find(".in2").find("div").find("input").val();
+	$.post("$rc.contextPath/telAdd.htm",
+			{
+		telName:telname,
+		telNnum1:telnum1,
+		telNnum2:telnum2},
+		function(data){
+		var datas = jQuery.parseJSON(data);
+     	alert(datas.msg);
+     	});
+	
+}
+</script>

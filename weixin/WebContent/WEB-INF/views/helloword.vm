@@ -1,2 +1,0 @@
-#set($layout = "layout/layout1.vm")
-123456

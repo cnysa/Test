@@ -62,6 +62,7 @@ public class LoginAction extends BaseAction{
 		u.setPassword(password);
 		u.setLogged(true);
 		getSession().setAttribute("userInSession", u);
+		model.put("admin", u.getId());
 		
 		return "home";
 	}

@@ -1,30 +1,35 @@
 #set($layout = "layout/cjcx.vm")
-<body ontouchstart>
-<div class="weui_tab">
-      <div class="weui_navbar">
-        <div class="weui_navbar_item weui_bar_item_on">
-          课程
-        </div>
-        <div class="weui_navbar_item weui_bar_item_on">
-          成绩
-        </div>
-      </div>
-      <div class="weui_tab_bd">
-      	<table  width="100%" cellspacing="20">
-		</table>
-      </div>
+<body>
+<div class="weui_cells">
+  
+</div>
 <script type = "text/javascript" >
 $(function () {
-	var html = "";
-	var num =  Number($result[0][0]);
+	var html = 	"<div class='weui_cell' style='background:#000;color:#FFF'>"+
+    "<div class='weui_cell_bd weui_cell_primary'>"+
+    "<p>课程</p>"+
+  	"</div>"+
+  	"<div class='weui_cell_bd'>"+
+    "成绩"+
+  	"</div>"+
+	"</div>";
+
 	#foreach($temp in $result)
 	#if($velocityCount != 1)
-	  		html += "<tr>"+
-		    "<td align='left'>$temp[0]</td>"+
-		    "<td align='left'>"+$temp[1]+"</td>"+
-		  "</tr>";
+	#if($velocityCount%2 == 1)
+  	  html += "<div class='weui_cell' style='background:#cccccc;'>"+
+  	#else
+  	  html += "<div class='weui_cell'>"+
+		#end
+	"<div class='weui_cell_bd weui_cell_primary'>"+
+    "<p>$!temp[0]</p>"+
+  	"</div>"+
+  	"<div class='weui_cell_ft'>"+
+  	$!temp[1]+
+  	"</div>"+
+	"</div>";
 	#end
-	#end 
-	$(".weui_tab_bd").find("table").html(html);
+	#end
+	$(".weui_cells").html(html);
 });
 </script>

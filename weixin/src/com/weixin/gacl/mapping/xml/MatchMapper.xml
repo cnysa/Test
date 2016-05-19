@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weixin.gacl.mapping.dao.MatchMapper" >
+  <resultMap id="BaseResultMap" type="com.weixin.gacl.mapping.beans.Match" >
+    <id column="match_id" property="matchId" jdbcType="VARCHAR" />
+    <result column="match_name" property="matchName" jdbcType="VARCHAR" />
+    <result column="match_todo" property="matchTodo" jdbcType="VARCHAR" />
+    <result column="match_url" property="matchUrl" jdbcType="VARCHAR" />
+    <result column="match_group" property="matchGroup" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    match_id, match_name, match_todo, match_url, match_group
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_match
+    where match_id = #{matchId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_match
+    where match_id = #{matchId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.weixin.gacl.mapping.beans.Match" >
+    insert into wx_match (match_id, match_name, match_todo, 
+      match_url, match_group)
+    values (#{matchId,jdbcType=VARCHAR}, #{matchName,jdbcType=VARCHAR}, #{matchTodo,jdbcType=VARCHAR}, 
+      #{matchUrl,jdbcType=VARCHAR}, #{matchGroup,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weixin.gacl.mapping.beans.Match" >
+    insert into wx_match
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="matchId != null" >
+        match_id,
+      </if>
+      <if test="matchName != null" >
+        match_name,
+      </if>
+      <if test="matchTodo != null" >
+        match_todo,
+      </if>
+      <if test="matchUrl != null" >
+        match_url,
+      </if>
+      <if test="matchGroup != null" >
+        match_group,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="matchId != null" >
+        #{matchId,jdbcType=VARCHAR},
+      </if>
+      <if test="matchName != null" >
+        #{matchName,jdbcType=VARCHAR},
+      </if>
+      <if test="matchTodo != null" >
+        #{matchTodo,jdbcType=VARCHAR},
+      </if>
+      <if test="matchUrl != null" >
+        #{matchUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="matchGroup != null" >
+        #{matchGroup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.gacl.mapping.beans.Match" >
+    update wx_match
+    <set >
+      <if test="matchName != null" >
+        match_name = #{matchName,jdbcType=VARCHAR},
+      </if>
+      <if test="matchTodo != null" >
+        match_todo = #{matchTodo,jdbcType=VARCHAR},
+      </if>
+      <if test="matchUrl != null" >
+        match_url = #{matchUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="matchGroup != null" >
+        match_group = #{matchGroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where match_id = #{matchId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weixin.gacl.mapping.beans.Match" >
+    update wx_match
+    set match_name = #{matchName,jdbcType=VARCHAR},
+      match_todo = #{matchTodo,jdbcType=VARCHAR},
+      match_url = #{matchUrl,jdbcType=VARCHAR},
+      match_group = #{matchGroup,jdbcType=VARCHAR}
+    where match_id = #{matchId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,14 +1,25 @@
 #set($layout = "layout/home.vm")
 #set($currentPage="1")
+<style type="text/css">
+input {border:0;
+width:100%;}
+</style>
 <section class="rt_wrap content mCustomScrollbar">
+<div class="rt_content">
+<form action="$rc.contextPath/createMenu.htm">
 <div>
  <table class="table menuList">
  </table>
 </div>
+<input class="submi" type="submit" value="提交" class="submit_btn"/>
+</form>
+</div>
 </section>
 <script type = "text/javascript" >
 $(function () {
+	$(".submi").hide();
 	var list = $!{menu};
+	var urlname = "787";
 	var str="  <tr>"+
 		   "<th>菜单按钮</th>"+
 		   "<th>菜单名字</th>"+
@@ -25,8 +36,9 @@ $(function () {
 			   if(list.menu.button[i].sub_button[0].type == "click"){
 				   str += "<td>"+list.menu.button[i].sub_button[0].key+"</td><td></td><td></td>";
 			   }else if(list.menu.button[i].sub_button[0].type == "view"){
-				   str += "<td></td><td>"+list.menu.button[i].sub_button[0].url+"</td>"
-				   +"<td class='center'><a class='inner_btn'>编辑</a></td>";
+				   str += "<td></td><td class='url'><div><input name="+urlname+" type='text' readOnly='true' value="+list.menu.button[i].sub_button[0].url+"></input></div</td>"
+				   +"<td class='center'><a class='inner_btn' onclick='bianji(this)'>编辑</a></td>";
+				   urlname++;
 			   }
 			   str += "</tr>";
 			  for(var j=1;j<list.menu.button[i].sub_button.length;j++){
@@ -36,12 +48,18 @@ $(function () {
 				  if(list.menu.button[i].sub_button[j].type == "click"){
 					   str += "<td>"+list.menu.button[i].sub_button[j].key+"</td><td></td><td></td>";
 				   }else if(list.menu.button[i].sub_button[j].type == "view"){
-					   str += "<td></td><td>"+list.menu.button[i].sub_button[j].url+"</td>"+
-					   "<td class='center'><a class='inner_btn'>编辑</a></td>";
+					   str += "<td></td><td class='url' ><div><input name="+urlname+" type='text' readOnly='true' value="+list.menu.button[i].sub_button[j].url+"></input></div></td>"
+					   +"<td class='center'><a class='inner_btn' onclick='bianji(this)'>编辑</a></td>";  
+					   urlname++;
 				   }
 				   str += "</tr>";
 			  }
 	}
 	$(".menuList").html(str);
 });
+
+function bianji(obj){
+	$(obj).parent().parent().find(".url").find("div").find("input").css("border","1px solid").removeAttr("readOnly");
+	$(".submi").show();
+}
 </script>

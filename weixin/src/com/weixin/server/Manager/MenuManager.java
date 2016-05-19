@@ -24,7 +24,7 @@ public class MenuManager {
 	 * @author: zhanggd16816
 	 * @date: 2016年3月11日上午11:58:11
 	 */
-	public static Menu getMenu() {
+	public static Menu getMenu(String url1,String url2,String url3,String url4,String url5,String url6) {
 		CommonButton btn11 = new CommonButton();
 		btn11.setName(EnumManager.MENU_XYJJ.getRespMsg());
 		btn11.setType("click");
@@ -33,22 +33,31 @@ public class MenuManager {
 		ViewButton btn12 = new ViewButton();
 		btn12.setName(EnumManager.MENU_XYXW.getRespMsg());
 		btn12.setType("view");
-		btn12.setUrl("http://it.qlu.edu.cn/list.php?catid=54");
+		if(null == url1){
+			btn12.setUrl("http://it.qlu.edu.cn/list.php?catid=54");
+		}else{
+			btn12.setUrl(url1);
+		}
 
 		ViewButton btn13 = new ViewButton();
 		btn13.setName(EnumManager.MENU_JXKY.getRespMsg());
 		btn13.setType("view");
-		btn13.setUrl("http://it.qlu.edu.cn/list.php?catid=55");
+		if(null == url2){
+			btn13.setUrl("http://it.qlu.edu.cn/list.php?catid=55");
+		}else{
+			btn13.setUrl(url2);
+		}
+		
 
 		ViewButton btn14 = new ViewButton();
 		btn14.setName(EnumManager.MENU_GGTZ.getRespMsg());
 		btn14.setType("view");
-		btn14.setUrl("http://it.qlu.edu.cn/list.php?catid=53");
-
-//		CommonButton btn21 = new CommonButton();
-//		btn21.setName(EnumManager.MENU_Xl.getRespMsg());
-//		btn21.setType("click");
-//		btn21.setKey(EnumManager.MENU_Xl.getRespCode());
+		if(null == url3){
+			btn14.setUrl("http://it.qlu.edu.cn/list.php?catid=53");
+		}else{
+			btn14.setUrl(url3);
+		}
+		
 
 		CommonButton btn22 = new CommonButton();
 		btn22.setName(EnumManager.MENU_ZYJS.getRespMsg());
@@ -58,17 +67,27 @@ public class MenuManager {
 		ViewButton btn23 = new ViewButton();
 		btn23.setName(EnumManager.MENU_CJCX.getRespMsg());
 		btn23.setType("view");
-		btn23.setUrl("http://moshangren.imwork.net/weixin/wx_cjcx");
+		if(null == url1){
+			btn23.setUrl("http://moshangren.imwork.net/weixin/wx_cjcx");
+		}else{
+			btn23.setUrl(url4);
+		}
+		
 
 		CommonButton btn24 = new CommonButton();
 		btn24.setName(EnumManager.MENU_YKTCZ.getRespMsg());
 		btn24.setType("click");
 		btn24.setKey(EnumManager.MENU_YKTCZ.getRespCode());
 		
-		CommonButton btn25 = new CommonButton();
+		ViewButton btn25 = new ViewButton();
 		btn25.setName(EnumManager.MENU_LSLXFS.getRespMsg());
-		btn25.setType("click");
-		btn25.setKey(EnumManager.MENU_LSLXFS.getRespCode());
+		btn25.setType("view");
+		if(null == url1){
+			btn25.setUrl("http://moshangren.imwork.net/weixin/wx_tel");
+		}else{
+			btn25.setUrl(url5);
+		}
+		
 
 		CommonButton btn31 = new CommonButton();
 		btn31.setName(EnumManager.MENU_BBQ.getRespMsg());
@@ -83,7 +102,12 @@ public class MenuManager {
 		ViewButton btn34 = new ViewButton();
 		btn34.setName(EnumManager.MENU_SYBZ.getRespMsg());
 		btn34.setType("view");
-		btn34.setUrl("http://www.baidu.com/");
+		if(null == url1){
+			btn34.setUrl("http://www.baidu.com/");
+		}else{
+			btn34.setUrl(url6);
+		}
+		
 
 		ComplexButton mainBtn1 = new ComplexButton();
 		mainBtn1.setName("T资讯");
@@ -97,13 +121,6 @@ public class MenuManager {
 		mainBtn3.setName("T娱乐");
 		mainBtn3.setSub_button(new Button[] { btn31, btn32, btn34 });
 
-		/**
-		 * 这是公众号xiaoqrobot目前的菜单结构，每个一级菜单都有二级菜单项<br>
-		 * 
-		 * 在某个一级菜单下没有二级菜单的情况，menu该如何定义呢？<br>
-		 * 比如，第三个一级菜单项不是“更多体验”，而直接是“幽默笑话”，那么menu应该这样定义：<br>
-		 * menu.setButton(new Button[] { mainBtn1, mainBtn2, btn33 });
-		 */
 		Menu menu = new Menu();
 		menu.setButton(new Button[] { mainBtn1, mainBtn2, mainBtn3 });
 

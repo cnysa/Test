@@ -13,7 +13,7 @@ public enum EnumManager {
     MENU_ZYJS("22","专业竞赛"),
     MENU_CJCX("23","成绩查询"),
     MENU_YKTCZ("24","一卡通充值"),
-    MENU_LSLXFS("25","老师联系方式"),
+    MENU_LSLXFS("25","各种电话"),
     MENU_BBQ("31","表白墙"),
     MENU_DQHD("32","当前活动"),
     MENU_SYBZ("33","使用帮助")

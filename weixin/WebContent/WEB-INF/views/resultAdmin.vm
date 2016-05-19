@@ -1,7 +1,7 @@
 #set($layout = "layout/home.vm")
-#set($currentPage="0")
+#set($currentPage="err")
 <section class="rt_wrap content mCustomScrollbar">
 <div class="rt_content">
-<h1 style="color:#000;font-size:20px;font-weight:bold;text-align:center;">欢迎登陆</h1>
+<h1 style="color:red;font-size:20px;font-weight:bold;text-align:center;">$!msg</h1>
 </div>
 </section>

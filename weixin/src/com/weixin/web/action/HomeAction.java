@@ -1,10 +1,13 @@
 package com.weixin.web.action;
 
+import net.sf.json.JSONObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.weixin.server.Manager.MenuManager;
 import com.weixin.server.Manager.pojo.AccessToken;
@@ -15,12 +18,6 @@ import com.weixin.server.util.WeixinUtil;
 public class HomeAction extends BaseAction{
 	
 	private static Logger log = LoggerFactory.getLogger(HomeAction.class);
-	
-	// 第三方用户唯一凭证  
-    public static String appid = "";  
-    // 第三方用户唯一凭证密钥  
-    public static String appsecret = "";  
-    public static AccessToken accessToken = null; 
     
     @RequestMapping(value="/home")
     public String home(final ModelMap model){
@@ -30,27 +27,46 @@ public class HomeAction extends BaseAction{
 	@RequestMapping(value="/menuManager")
 	public String goHome(final ModelMap model){
 		log.info("go menu Manager!");
-		model.put("menu", queryMenu());
-		return "menuManager";
+		String result = queryMenu();
+		if(result != null){
+			model.put("menu", result);
+			return "menuManager";
+		}
+		model.put("msg", "菜单查询失败！");
+		return "resultAdmin";
 	}
 	
-	public void createMenu(){
-		accessToken = TokenThread.accessToken;
+	@RequestMapping(value="/createMenu")
+	public String createMenu(
+			final @RequestParam(value = "787", required = true) String url1,
+			final @RequestParam(value = "788", required = true) String url2,
+			final @RequestParam(value = "789", required = true) String url3,
+			final @RequestParam(value = "790", required = true) String url4,
+			final @RequestParam(value = "791", required = true) String url5,
+			final @RequestParam(value = "792", required = true) String url6,
+			final ModelMap model){
+		log.info("url1:"+url1);
+		log.info("url2:"+url2);
+		log.info("url3:"+url3);
+		log.info("url4:"+url4);
+		log.info("url5:"+url5);
+		log.info("url6:"+url6);
+	    AccessToken accessToken = TokenThread.accessToken;
         if (null != accessToken) {
-			// 调用接口创建菜单
-			int result = WeixinUtil.createMenu(MenuManager.getMenu(), accessToken.getToken());
-			// 判断菜单创建结果
+			int result = WeixinUtil.createMenu(MenuManager.getMenu(url1,url2,url3,url4,url5,url6), accessToken.getToken());
 			if (0 == result){
 				log.info("菜单创建成功！");
+				model.put("msg", "菜单创建成功！");
 			}else{
 				log.info("菜单创建失败，错误码：" + result);
-				log.info("服务结束！");
+				model.put("msg", "菜单创建失败！");
 			}
 		}
+        return "resultAdmin";
 	}
 	
 	public String queryMenu(){
-		accessToken = TokenThread.accessToken;
+		AccessToken accessToken = TokenThread.accessToken;
         if (null != accessToken) {
 			// 调用接口查询菜单
 			String result = WeixinUtil.queryMenu(accessToken.getToken());

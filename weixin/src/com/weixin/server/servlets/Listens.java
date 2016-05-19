@@ -10,6 +10,9 @@ package com.weixin.server.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -22,8 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.weixin.gacl.manager.interfaces.TelManager;
 import com.weixin.gacl.manager.interfaces.UserManager;
+import com.weixin.gacl.mapping.beans.Tel;
 import com.weixin.server.message.process.TulingApiProcess;
+import com.weixin.server.message.resp.Article;
+import com.weixin.server.message.resp.RespNewsMessage;
 import com.weixin.server.message.resp.RespTextMessage;
 import com.weixin.server.util.EnumManager;
 import com.weixin.server.util.MessageUtil;
@@ -41,6 +48,8 @@ public class Listens {
 	private static Logger log = LoggerFactory.getLogger(Listens.class);
 	@Autowired
     private UserManager userManagerImpl;//注入dao
+	@Autowired
+	private TelManager telManagerImpl;
 
 	@RequestMapping(value="/listen")
 	public void listens(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException{
@@ -81,6 +90,7 @@ public class Listens {
 	
 	public String processRequest(HttpServletRequest request) {
 		String respMessage = null;
+		boolean isNewTextClick = false;
 		log.info("=====接受消息=====");
 		try {
 			// 默认返回的文本消息内容
@@ -91,48 +101,27 @@ public class Listens {
 			// 文本消息
 			if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
 				log.info("消息内容:文本[{}]",requestMap.get("Content"));
-				respContent = TulingApiProcess.getTulingResult(requestMap.get("Content"));
-				//				respContent = "您发送的是文本消息！";
+				String tel = null;
+				String reques = requestMap.get("Content");
+				if(reques.charAt(0) == '#'){
+					tel = reques.substring(1);
+					tel = queryTel(tel);
+				}
+				if(tel == null){
+					respContent = TulingApiProcess.getTulingResult(requestMap.get("Content"));
+				}else{
+					respContent = tel;
+				}
 			}
-			// 图片消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
-				log.info("消息内容:链接[{}]",requestMap.get("PicUrl"));
-				respContent = "您发送的是图片消息！";
-			}
-			// 地理位置消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
-				log.info("消息内容:经纬[{},{}],",
-						requestMap.get("Location_X"),
-						requestMap.get("Location_Y"));
-				log.info("消息内容:缩放大小[{}],地理位置[{}]",
-						requestMap.get("Scale"),
-						requestMap.get("Label"));
-				respContent = "您发送的是地理位置消息！";
-			}
-			// 链接消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
-				log.info("消息内容:标题[{}]",requestMap.get("Title"));
-				log.info("消息内容:描述[{}]",requestMap.get("Description"));
-				log.info("消息内容:链接[{}]",requestMap.get("Url"));
-				respContent = "您发送的是链接消息！";
-			}
-			// 音频消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
-				log.info("消息内容:媒体ID[{}]",requestMap.get("MediaId"));
-				log.info("消息内容:语音格式[{}]",requestMap.get("Format"));
-				respContent = "您发送的是音频消息！";
-			}
-			// 音频消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
-				log.info("消息内容:媒体ID[{}]",requestMap.get("MediaId"));
-				log.info("消息内容:视频格式[{}]",requestMap.get("ThumbMediaId"));
-				respContent = "您发送的是视频消息！";
-			}
-			// 音频消息
-			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORT_VIDEO)) {
-				log.info("消息内容:媒体ID[{}]",requestMap.get("MediaId"));
-				log.info("消息内容:视频格式[{}]",requestMap.get("ThumbMediaId"));
-				respContent = "您发送的是小视频消息！";
+			// 图片消息 地理位置消息 链接消息 音频消息 小视频
+			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)
+					|| msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)
+					|| msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)
+					|| msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)
+					|| msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)
+					|| msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORT_VIDEO)
+					) {
+				respContent = "暂不支持该类型消息！";
 			}
 			// 事件推送
 			else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
@@ -149,17 +138,56 @@ public class Listens {
 				// 自定义菜单点击事件
 				else if (eventType.equals(MessageUtil.EVENT_TYPE_CLICK)) {
 					String eventKey = requestMap.get("EventKey");
-					respContent = EnumManager.getEnumByCode(eventKey).getRespMsg()+"菜单项被点击！";
+					if(eventKey.equals(EnumManager.MENU_XYJJ.getRespCode())){
+						respContent = createTw(requestMap.get("ToUserName"), requestMap.get("FromUserName"));
+						isNewTextClick = true;
+					}else{
+						respContent = EnumManager.getEnumByCode(eventKey).getRespMsg()+"菜单项被点击！";
+					}
 				}
 			}
-			textMessage.setContent(respContent);
-			respMessage = MessageUtil.textMessageToXml(textMessage);
-//			log.info(respMessage.toString());
+			if(isNewTextClick){
+				respMessage = respContent;
+			}else{
+				textMessage.setContent(respContent);
+				respMessage = MessageUtil.textMessageToXml(textMessage);
+			}
+			log.info(respMessage.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return respMessage;
+	}
+	
+	/**
+	 * 
+	 * createTw
+	 * @Title: createTw
+	 * @Description: TODO(单图文消息)
+	 * @param fromUserName
+	 * @param toUserName: void
+	 */
+	public String createTw(String fromUserName,String toUserName){
+        // 创建图文消息  
+        RespNewsMessage newsMessage = new RespNewsMessage();  
+        newsMessage.setToUserName(toUserName);  
+        newsMessage.setFromUserName(fromUserName);  
+        newsMessage.setCreateTime(new Date().getTime());  
+        newsMessage.setMsgType(MessageUtil.RESP_MESSAGE_TYPE_NEWS);
+        List<Article> articleList = new ArrayList<Article>();
+        Article article = new Article();  
+        article.setTitle("齐鲁工业大学信息学院简介");  
+        article.setDescription("信息学院前身计算机科学与技术系成立于1998年8月（1992年在原机电工程系建立了计算机专业），2003年7月，更名信息科学与技术学院，2011年4月又更名为信息学院。信息学院现有计算机应用技术、电子商务与物流信息工程两个二级学科硕士点，");  
+        article.setPicUrl("http://moshangren.imwork.net/weixin/images/xxxy.jpg");  
+        article.setUrl("http://baike.baidu.com/link?url=jVO6aOjpuxJ_WXLgSXPmqFOIomfhzkGHGJa82dgqAovxYoEuNBkEQ6uGYs1OzBdsiRftl8LGQ5apVrVCTmBD0aNbmgFHId82PH6vnroDLFXGLvonRNfie3_jjXaIvzho7xxKToIqM257hgvi7xjG7rnq7CHShePJpxQ67kFVPpEVUNx_uQFu1n7Io58deNOaO5e5SiaQb8jB7KGhrUK8Ga");  
+        articleList.add(article);  
+        // 设置图文消息个数  
+        newsMessage.setArticleCount(articleList.size());  
+        // 设置图文消息包含的图文集合  
+        newsMessage.setArticles(articleList);  
+        // 将图文消息对象转换成xml字符串  
+        return MessageUtil.newsMessageToXml(newsMessage); 
 	}
 	
 	public String setWxid(Map<String, String> requestMap){
@@ -174,5 +202,28 @@ public class Listens {
 			log.info("老用户:{}",fromUserName);
 		}
 		return msgType;
+	}
+	
+	public String queryTel(String name){
+		String result = null;
+		StringBuilder re = new StringBuilder();
+		Tel[] tels = telManagerImpl.queryMh(name);
+		if(tels != null){
+			for(int i=0; i<tels.length; i++){
+				re.append(tels[i].getTelName());
+				re.append(" : ");
+				re.append("\n");
+				re.append(tels[i].getTelNum1());
+				if(tels[i].getTelNum2()!=null){
+					re.append("\n");
+					re.append(tels[i].getTelNum2());
+				}
+				re.append("\n");
+			}
+			result = re.toString();
+		}else{
+			result = "很抱歉，没有相关结果！";
+		}
+		return result;
 	}
 }

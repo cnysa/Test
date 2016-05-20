@@ -7,7 +7,6 @@ import java.util.Enumeration;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -99,7 +98,8 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter {
      * @param request
      * @return
      */
-    private String getReturnUrl(HttpServletRequest request) {
+    @SuppressWarnings("unused")
+	private String getReturnUrl(HttpServletRequest request) {
         try {
             StringBuffer sb=new StringBuffer();
             sb.append(request.getRequestURI());

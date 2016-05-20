@@ -27,7 +27,6 @@ input {border:0;
 </section>
 <script type = "text/javascript" >
 $(function () {
-// 	$(".submi").hide();
 	var str="  <tr>"+
 	   "<th>telName</th>"+
 	   "<th>telNum1</th>"+
@@ -98,7 +97,7 @@ function add(){
   	"</tr>";
 	$(".telList").append(str);
 	$(".addIn").css("border","1px solid");
-	
+// 	$(".addIn").removeClass("addIn");
 }
 
 function addSub(obj){
@@ -110,7 +109,7 @@ function addSub(obj){
 	$(pare).attr("value",telName);
 	$(obj).parent().remove();
 	$(pare).append(str);
-	$(pare).find("td").find("div").find("input").css("border","0").attr("readOnly","true");
+	$(pare).find("td").find("div").find("input").css("border","0").attr("readOnly","true").removeClass("addIn");
 	
 	var telname = $(pare).attr("value");
 	var telnum1 = $(pare).find(".in1").find("div").find("input").val();
@@ -122,6 +121,9 @@ function addSub(obj){
 		telNnum2:telnum2},
 		function(data){
 		var datas = jQuery.parseJSON(data);
+		if(datas.status == "0"){
+			$(pare).remove();
+		}
      	alert(datas.msg);
      	});
 	

@@ -1,0 +1,20 @@
+#set($layout = "layout/cjcx.vm")
+<body>
+<div class="weui_cells_title">比赛列表</div>
+<div class="weui_cells weui_cells_access">
+</div>
+<script type = "text/javascript" >
+$(function () {
+	var str = "";
+	#foreach($temp in $matchs)
+		str +=	"<a class='weui_cell' href='$rc.contextPath/wx_matchPage.htm?matchId=$!temp.matchId'>"+
+    			"<div class='weui_cell_bd weui_cell_primary'>"+
+		       	"<p>$!temp.matchName</p>"+
+		    	"</div>"+
+		    	"<div class='weui_cell_ft'>"+
+			   	"</div>"+
+				"</a>";
+	#end;
+	$(".weui_cells").html(str);
+});
+</script>

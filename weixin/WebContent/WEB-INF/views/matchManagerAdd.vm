@@ -1,0 +1,31 @@
+#set($layout = "layout/home.vm")
+#set($currentPage="4")
+<section class="rt_wrap content mCustomScrollbar">
+<form #if($!matchId)action="$rc.contextPath/matchUpdate.htm" #else action="$rc.contextPath/matchAdd.htm" #end>
+<input type="hidden" name="matchId" #if($!matchId)value="$!matchId"#end/>
+<h2><strong style="color:grey;">比赛信息编辑</strong></h2>
+<ul class="ulColumn2">
+ <li>
+  <span class="item_name" style="width:120px;">比赛名称：</span>
+  <input type="text" name="matchName" class="textbox textbox_295" placeholder="请输入比赛名称" #if($!matchName)value="$!matchName"#end/>
+ </li>
+ <li>
+  <span class="item_name" style="width:120px;">比赛简介：</span>
+  <textarea name="matchTodo" placeholder="摘要信息" class="textarea" style="width:500px;height:100px;"> #if($!matchTodo)value="$!matchTodo"#end</textarea>
+ </li>
+  <li>
+  <span class="item_name" style="width:120px;">比赛网址：</span>
+  <input type="text" name="matchUrl" class="textbox textbox_295" placeholder="请输入比赛网址" #if($!matchUrl)value="$!matchUrl"#end/>
+ </li>
+ 
+ <li>
+  <span class="item_name" style="width:120px;">比赛群组：</span>
+  <input type="text" name="matchGroup" class="textbox textbox_295" placeholder="请输入比赛群组" #if($!matchGroup)value="$!matchGroup"#end/>
+ </li>
+  <li>
+  <span class="item_name" style="width:120px;"></span>
+   <input type="submit" class="link_btn"/>
+  </li>
+ </ul>
+ </form>
+</section>

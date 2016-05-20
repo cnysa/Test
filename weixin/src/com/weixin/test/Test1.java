@@ -1,11 +1,6 @@
 package com.weixin.test;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
-
-import com.weixin.gacl.mapping.beans.Admin;
 
 public class Test1 {
 	

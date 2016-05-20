@@ -24,7 +24,7 @@ public class MenuManager {
 	 * @author: zhanggd16816
 	 * @date: 2016年3月11日上午11:58:11
 	 */
-	public static Menu getMenu(String url1,String url2,String url3,String url4,String url5,String url6) {
+	public static Menu getMenu(String url12,String url13,String url14,String url22,String url23,String url25,String url34) {
 		CommonButton btn11 = new CommonButton();
 		btn11.setName(EnumManager.MENU_XYJJ.getRespMsg());
 		btn11.setType("click");
@@ -33,44 +33,48 @@ public class MenuManager {
 		ViewButton btn12 = new ViewButton();
 		btn12.setName(EnumManager.MENU_XYXW.getRespMsg());
 		btn12.setType("view");
-		if(null == url1){
+		if(null == url12){
 			btn12.setUrl("http://it.qlu.edu.cn/list.php?catid=54");
 		}else{
-			btn12.setUrl(url1);
+			btn12.setUrl(url12);
 		}
 
 		ViewButton btn13 = new ViewButton();
 		btn13.setName(EnumManager.MENU_JXKY.getRespMsg());
 		btn13.setType("view");
-		if(null == url2){
+		if(null == url13){
 			btn13.setUrl("http://it.qlu.edu.cn/list.php?catid=55");
 		}else{
-			btn13.setUrl(url2);
+			btn13.setUrl(url13);
 		}
 		
 
 		ViewButton btn14 = new ViewButton();
 		btn14.setName(EnumManager.MENU_GGTZ.getRespMsg());
 		btn14.setType("view");
-		if(null == url3){
+		if(null == url14){
 			btn14.setUrl("http://it.qlu.edu.cn/list.php?catid=53");
 		}else{
-			btn14.setUrl(url3);
+			btn14.setUrl(url14);
 		}
 		
 
-		CommonButton btn22 = new CommonButton();
+		ViewButton btn22 = new ViewButton();
 		btn22.setName(EnumManager.MENU_ZYJS.getRespMsg());
-		btn22.setType("click");
-		btn22.setKey(EnumManager.MENU_ZYJS.getRespCode());
+		btn22.setType("view");
+		if(null == url22){
+			btn22.setUrl("http://moshangren.imwork.net/weixin/wx_match");
+		}else{
+			btn22.setUrl(url22);
+		}
 
 		ViewButton btn23 = new ViewButton();
 		btn23.setName(EnumManager.MENU_CJCX.getRespMsg());
 		btn23.setType("view");
-		if(null == url1){
+		if(null == url23){
 			btn23.setUrl("http://moshangren.imwork.net/weixin/wx_cjcx");
 		}else{
-			btn23.setUrl(url4);
+			btn23.setUrl(url23);
 		}
 		
 
@@ -82,10 +86,10 @@ public class MenuManager {
 		ViewButton btn25 = new ViewButton();
 		btn25.setName(EnumManager.MENU_LSLXFS.getRespMsg());
 		btn25.setType("view");
-		if(null == url1){
+		if(null == url25){
 			btn25.setUrl("http://moshangren.imwork.net/weixin/wx_tel");
 		}else{
-			btn25.setUrl(url5);
+			btn25.setUrl(url25);
 		}
 		
 
@@ -102,10 +106,10 @@ public class MenuManager {
 		ViewButton btn34 = new ViewButton();
 		btn34.setName(EnumManager.MENU_SYBZ.getRespMsg());
 		btn34.setType("view");
-		if(null == url1){
+		if(null == url34){
 			btn34.setUrl("http://www.baidu.com/");
 		}else{
-			btn34.setUrl(url6);
+			btn34.setUrl(url34);
 		}
 		
 

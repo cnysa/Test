@@ -14,4 +14,6 @@ public interface MatchMapper {
     int updateByPrimaryKeySelective(Match record);
 
     int updateByPrimaryKey(Match record);
+    
+    Match[] findAll();
 }

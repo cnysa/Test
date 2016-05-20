@@ -62,6 +62,10 @@
       <param-value>utf-8</param-value>
     </init-param>
   </filter>
+  <filter-mapping>  
+        <filter-name>CharacterEncodingFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping> 
   <servlet>
     <description></description>
     <display-name>VerifyCodeServlet</display-name>

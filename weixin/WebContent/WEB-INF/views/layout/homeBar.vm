@@ -11,7 +11,8 @@
   <li>
    <dl>
     <dt>管理</dt>
-    <dd><a href="$rc.contextPath/telManager.htm">联系方式管理</a></dd>
+    <dd><a href="$rc.contextPath/telManager.htm" #if($currentPage==2) class="active" #end>联系方式管理</a></dd>
+    <dd><a href="$rc.contextPath/matchManager.htm" #if($currentPage==3 || $currentPage==4) class="active" #end>比赛信息管理</a></dd>
    </dl>
   </li>
   <li>

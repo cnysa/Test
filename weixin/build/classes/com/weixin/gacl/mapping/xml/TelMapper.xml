@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weixin.gacl.mapping.dao.TelMapper" >
+  <resultMap id="BaseResultMap" type="com.weixin.gacl.mapping.beans.Tel" >
+    <id column="tel_name" property="telName" jdbcType="VARCHAR" />
+    <result column="tel_num1" property="telNum1" jdbcType="VARCHAR" />
+    <result column="tel_num2" property="telNum2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tel_name, tel_num1, tel_num2
+  </sql>
+  <!-- 查询所有的记录 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_tel
+    where tel_name = #{telName,jdbcType=VARCHAR}
+  </select>
+  <select id="findMh" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select * from wx_tel
+  where tel_name like '%${_parameter}%'
+ 	</select>
+   <select id="findAll" resultMap="BaseResultMap">
+  select * from wx_tel
+ 	</select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_tel
+    where tel_name = #{telName,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.weixin.gacl.mapping.beans.Tel" >
+    insert into wx_tel (tel_name, tel_num1, tel_num2
+      )
+    values (#{telName,jdbcType=VARCHAR}, #{telNum1,jdbcType=VARCHAR}, #{telNum2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.weixin.gacl.mapping.beans.Tel" >
+    insert into wx_tel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="telName != null" >
+        tel_name,
+      </if>
+      <if test="telNum1 != null" >
+        tel_num1,
+      </if>
+      <if test="telNum2 != null" >
+        tel_num2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="telName != null" >
+        #{telName,jdbcType=VARCHAR},
+      </if>
+      <if test="telNum1 != null" >
+        #{telNum1,jdbcType=VARCHAR},
+      </if>
+      <if test="telNum2 != null" >
+        #{telNum2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.gacl.mapping.beans.Tel" >
+    update wx_tel
+    <set >
+      <if test="telNum1 != null" >
+        tel_num1 = #{telNum1,jdbcType=VARCHAR},
+      </if>
+      <if test="telNum2 != null" >
+        tel_num2 = #{telNum2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where tel_name = #{telName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weixin.gacl.mapping.beans.Tel" >
+    update wx_tel
+    set tel_num1 = #{telNum1,jdbcType=VARCHAR},
+      tel_num2 = #{telNum2,jdbcType=VARCHAR}
+    where tel_name = #{telName,jdbcType=VARCHAR}
+  </update>
+</mapper>

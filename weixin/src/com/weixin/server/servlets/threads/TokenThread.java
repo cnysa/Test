@@ -32,7 +32,7 @@ public class TokenThread implements Runnable {
     public void run() {
     	accessToken = WeixinUtil.getAccessToken(appid, appsecret);
         if (null != accessToken) {
-			int result = WeixinUtil.createMenu(MenuManager.getMenu(null,null,null,null,null,null), accessToken.getToken());
+			int result = WeixinUtil.createMenu(MenuManager.getMenu(null,null,null,null,null,null,null), accessToken.getToken());
 			if (0 == result){
 				log.info("菜单创建成功！");
 			}else{

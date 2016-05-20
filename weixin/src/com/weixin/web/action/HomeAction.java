@@ -1,9 +1,5 @@
 package com.weixin.web.action;
 
-import net.sf.json.JSONObject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +13,6 @@ import com.weixin.server.util.WeixinUtil;
 @Controller(value="homeAction")
 public class HomeAction extends BaseAction{
 	
-	private static Logger log = LoggerFactory.getLogger(HomeAction.class);
-    
     @RequestMapping(value="/home")
     public String home(final ModelMap model){
     	return "home";
@@ -44,6 +38,7 @@ public class HomeAction extends BaseAction{
 			final @RequestParam(value = "790", required = true) String url4,
 			final @RequestParam(value = "791", required = true) String url5,
 			final @RequestParam(value = "792", required = true) String url6,
+			final @RequestParam(value = "793", required = true) String url7,
 			final ModelMap model){
 		log.info("url1:"+url1);
 		log.info("url2:"+url2);
@@ -51,9 +46,10 @@ public class HomeAction extends BaseAction{
 		log.info("url4:"+url4);
 		log.info("url5:"+url5);
 		log.info("url6:"+url6);
+		log.info("url7:"+url7);
 	    AccessToken accessToken = TokenThread.accessToken;
         if (null != accessToken) {
-			int result = WeixinUtil.createMenu(MenuManager.getMenu(url1,url2,url3,url4,url5,url6), accessToken.getToken());
+			int result = WeixinUtil.createMenu(MenuManager.getMenu(url1,url2,url3,url4,url5,url6,url7), accessToken.getToken());
 			if (0 == result){
 				log.info("菜单创建成功！");
 				model.put("msg", "菜单创建成功！");

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weixin.gacl.mapping.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.weixin.gacl.mapping.beans.User" >
+    <id column="wx_user_id" property="wxUserId" jdbcType="VARCHAR" />
+    <result column="wx_user_xh" property="wxUserXh" jdbcType="VARCHAR" />
+    <result column="wx_user_mm" property="wxUserMm" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    wx_user_id, wx_user_xh, wx_user_mm
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_user
+    where wx_user_id = #{wxUserId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_user
+    where wx_user_id = #{wxUserId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.weixin.gacl.mapping.beans.User" >
+    insert into wx_user (wx_user_id, wx_user_xh, wx_user_mm
+      )
+    values (#{wxUserId,jdbcType=VARCHAR}, #{wxUserXh,jdbcType=VARCHAR}, #{wxUserMm,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.weixin.gacl.mapping.beans.User" >
+    insert into wx_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="wxUserId != null" >
+        wx_user_id,
+      </if>
+      <if test="wxUserXh != null" >
+        wx_user_xh,
+      </if>
+      <if test="wxUserMm != null" >
+        wx_user_mm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="wxUserId != null" >
+        #{wxUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserXh != null" >
+        #{wxUserXh,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserMm != null" >
+        #{wxUserMm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.gacl.mapping.beans.User" >
+    update wx_user
+    <set >
+      <if test="wxUserXh != null" >
+        wx_user_xh = #{wxUserXh,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserMm != null" >
+        wx_user_mm = #{wxUserMm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where wx_user_id = #{wxUserId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weixin.gacl.mapping.beans.User" >
+    update wx_user
+    set wx_user_xh = #{wxUserXh,jdbcType=VARCHAR},
+      wx_user_mm = #{wxUserMm,jdbcType=VARCHAR}
+    where wx_user_id = #{wxUserId,jdbcType=VARCHAR}
+  </update>
+</mapper>

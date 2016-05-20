@@ -1,0 +1,29 @@
+#set($layout = "layout/cjcx.vm")
+<body>
+<div class="hd">
+    <h1 class="page_title" style="text-align:center;color:#FF7F00;">$!matchs.matchName</h1>
+</div>
+<div class="bd">
+    <article class="weui_article">
+	<section>
+        <div class="weui_media_bd">
+                    <h4 class="weui_media_title">比赛简介</h4>
+                    <p class="weui_media_desc">$!matchs.matchTodo</p>
+        </div>
+        <section>
+	        <div class="weui_media_bd">
+	              <h4 class="weui_media_title">比赛网址</h4>
+	              <a href="$!matchs.matchUrl" class="weui_media_desc">$!matchs.matchUrl</a>
+	        </div>
+    	</section>
+                <section>
+	        <div class="weui_media_bd">
+              <h4 class="weui_media_title">比赛群组</h4>
+              <p class="weui_media_desc">$!matchs.matchGroup</p>
+	        </div>
+    	</section>
+    </article>
+    <div class="weui_btn_area">
+     <a class="weui_btn weui_btn_primary" href="$rc.contextPath/wx_match.htm" id="showTooltips2">返回</a>
+</div>
+</div>

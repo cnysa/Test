@@ -1,0 +1,64 @@
+#set($layout = "layout/home.vm")
+#set($currentPage="3")
+<style type="text/css">
+td{text-align:center;}
+.tdName{text-align:center;font-weight:bold;}
+</style>
+<section class="rt_wrap content mCustomScrollbar" >
+	<div class="rt_content">
+		<section>
+			<div>
+	 			<table class="table telList">
+	 			</table>
+			</div>
+		</section>
+		<section>
+			<div style="height:500px">
+				<input style="border:0;width:100%;" type="button" value="添加" class="submit_btn" onclick="location.href='$rc.contextPath/matchAddPage.htm'"/>
+			</div>
+		</section>
+	</div>
+</section>
+<script type = "text/javascript" >
+$(function () {
+	var str="  <tr>"+
+	   "<th>match name</th>"+
+	   "<th>id</th>"+
+	   "<th>match todo</th>"+
+	   "<th>match url</th>"+
+	   "<th>match group</th>"+
+	   "<th>操作</th>"+
+	  "</tr>";
+	  
+	#foreach($temp in $matchs)
+ 	  	str += "<tr value='$!temp.matchId'>"+
+    "<td class='tdName' style='width:200px'>$!temp.matchName</td>"+
+  	"<td style='width:25px'>$!temp.matchId</td>"+
+    "<td>$!temp.matchTodo</td>"+
+    "<td style='width:80px'>$!temp.matchUrl</td>"+
+    "<td style='width:80px'>$!temp.matchGroup</td>"+
+	"<td class='center' style='width:100px'><a class='inner_btn' isupdata='0' onclick='update(this)'>修改</a>"+
+	"<a class='inner_btn' onclick='del(this)'>删除</a>"+
+	"</td>"+
+  	"</tr>";
+	#end
+	
+	$(".telList").html(str);
+});
+
+function del(obj){
+	var param = $(obj).parent().parent().attr("value");
+	$.post("$rc.contextPath/matchDel.htm",{matchId:param},function(data){
+			var datas = jQuery.parseJSON(data);
+			if(datas.status == "1"){
+				$(obj).parent().parent().remove();
+			}
+	     	alert(datas.msg);
+	     	});
+}
+
+function update(obj){
+	var param = $(obj).parent().parent().attr("value");
+	location.href="$rc.contextPath/matchAddPage.htm?matchId="+param;
+}
+</script>

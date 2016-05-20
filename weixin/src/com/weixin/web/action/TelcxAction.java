@@ -49,6 +49,12 @@ public class TelcxAction extends BaseAction{
 			final ModelMap model){
 		log.info(telName);
 		Map<String,Object> map=new HashMap<String, Object>();
+		if(telManagerImpl.query(telName) == null){
+			map.put("status", "0");
+			map.put("msg", "É¾³ýÊ§°Ü£¡");
+			log.info("É¾³ýÊ§°Ü£¡");
+			return JSONObject.fromObject(map).toString();
+		}
 		if(telManagerImpl.delTel(telName)){
 			map.put("status", "1");
 			map.put("msg", "É¾³ý³É¹¦£¡");
@@ -74,7 +80,7 @@ public class TelcxAction extends BaseAction{
 		String num = telName;
 		String num1 = telNum1;
 		String num2 = telNum2;
-		if(num.equals("")){
+		if(num.equals("") || telManagerImpl.query(telName) == null){
 			map.put("status", "0");
 			map.put("msg", "ÐÞ¸ÄÊ§°Ü£¡");
 			log.info("ÐÞ¸ÄÊ§°Ü£¡");
@@ -111,7 +117,7 @@ public class TelcxAction extends BaseAction{
 		String num = telName;
 		String num1 = telNum1;
 		String num2 = telNum2;
-		if(num.equals("")){
+		if(num.equals("") || telManagerImpl.query(telName) != null){
 			map.put("status", "0");
 			map.put("msg", "Ìí¼ÓÊ§°Ü£¡");
 			log.info("Ìí¼ÓÊ§°Ü£¡");

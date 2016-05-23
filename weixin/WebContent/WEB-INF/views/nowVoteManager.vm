@@ -1,0 +1,47 @@
+#set($layout = "layout/home.vm")
+#set($currentPage="5")
+<section class="rt_wrap content mCustomScrollbar" >
+	<div class="rt_content">
+		<section>
+      <h2><strong style="color:grey;">当前投票</strong></h2>
+       <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">投票说明：</span>
+		<span class="item_name"><p>$!voteName</p></span>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">类型：</span>
+        <span class="item_name">#if($!{voteType}==0)<p>每个账号只能投一票</p>#else <p>每个账号每一天只能投一票</p>#end</span>
+       </li>
+       <li>
+       <span class="item_name" class="wstxt"  style="width:120px;">开始日期：</span><span class="item_name"><p>$!voteStartTime</p></span>
+	   <span  class="item_name" class="wstxt"  style="width:120px;">结束日期：</span><span class="item_name"><p>$!voteEndTime</p></span>
+       </li>
+       <li>
+		<span class="item_name" style="width:120px;">选项：</span>
+       	<table class="table voteList" style="margin-left:125px;width:520px;">
+	 	</table>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">每人可投个数：</span>
+        <span class="item_name"><h2>$!voteNumbers</h2></span>
+       </li>
+      </ul>
+     </section>
+		<section>
+			<div style="height:500px">
+				<input style="border:0;width:100%;" type="button" value="发起投票" class="submit_btn" onclick="location.href='$rc.contextPath/nowVoteAddPage.htm'"/>
+			</div>
+		</section>
+	</div>
+</section>
+<script type = "text/javascript" >
+$(function () {
+	var str = "";
+	#foreach($!temp in $!voteTode)
+	   		str += "<tr><td>"+$!{temp}.name+"</td>"
+   			+"<td>"+$!{temp}.num+"</td></tr>";
+	#end
+   	$(".voteList").html(str);
+});
+</script>

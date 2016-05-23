@@ -8,11 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @SuppressWarnings("serial")
 public class VerifyCodeServlet extends HttpServlet {
+	
+	private static Logger log = LoggerFactory.getLogger(VerifyCodeServlet.class);
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.debug("请求获取验证码()");
 		/*
 		 * 1. 创建验证码类
 		 */
@@ -29,5 +35,6 @@ public class VerifyCodeServlet extends HttpServlet {
 		 * 4. 把图片响应给客户端
 		 */
 		VerifyCode.output(image, response.getOutputStream());
+		log.debug("请求验证码结束():{}",vc.getText());
 	}
 }

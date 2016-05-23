@@ -1,6 +1,9 @@
 #set($layout = "layout/cjcx.vm")
 <div class="weui_msg">
-    <div class="weui_icon_area"><i class="weui_icon_msg weui_icon_warn"></i></div>
+    <div class="weui_icon_area">
+    #if($!status == "0")<i class="weui_icon_msg weui_icon_warn"></i>
+    #else<i class="weui_icon_msg weui_icon_success"></i>
+    #end</div>
     <div class="weui_text_area">
         <h2 class="weui_msg_title">$msg</h2>
     </div>

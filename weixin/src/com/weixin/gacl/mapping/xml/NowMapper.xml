@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weixin.gacl.mapping.dao.NowMapper" >
+  <resultMap id="BaseResultMap" type="com.weixin.gacl.mapping.beans.Now" >
+    <id column="now_id" property="nowId" jdbcType="VARCHAR" />
+    <result column="now_type" property="nowType" jdbcType="VARCHAR" />
+    <result column="now_name" property="nowName" jdbcType="VARCHAR" />
+    <result column="now_todo" property="nowTodo" jdbcType="VARCHAR" />
+    <result column="now_start_time" property="nowStartTime" jdbcType="VARCHAR" />
+    <result column="now_end_time" property="nowEndTime" jdbcType="VARCHAR" />
+    <result column="now_numbers" property="nowNumbers" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    now_id, now_type, now_name, now_todo, now_start_time, now_end_time, now_numbers
+  </sql>
+  <select id="findAll" resultMap="BaseResultMap">
+  select * from wx_now
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_now
+    where now_id = #{nowId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_now
+    where now_id = #{nowId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.weixin.gacl.mapping.beans.Now" >
+    insert into wx_now (now_id, now_type, now_name, 
+      now_todo, now_start_time, now_end_time, 
+      now_numbers)
+    values (#{nowId,jdbcType=VARCHAR}, #{nowType,jdbcType=VARCHAR}, #{nowName,jdbcType=VARCHAR}, 
+      #{nowTodo,jdbcType=VARCHAR}, #{nowStartTime,jdbcType=VARCHAR}, #{nowEndTime,jdbcType=VARCHAR}, 
+      #{nowNumbers,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weixin.gacl.mapping.beans.Now" >
+    insert into wx_now
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nowId != null" >
+        now_id,
+      </if>
+      <if test="nowType != null" >
+        now_type,
+      </if>
+      <if test="nowName != null" >
+        now_name,
+      </if>
+      <if test="nowTodo != null" >
+        now_todo,
+      </if>
+      <if test="nowStartTime != null" >
+        now_start_time,
+      </if>
+      <if test="nowEndTime != null" >
+        now_end_time,
+      </if>
+      <if test="nowNumbers != null" >
+        now_numbers,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nowId != null" >
+        #{nowId,jdbcType=VARCHAR},
+      </if>
+      <if test="nowType != null" >
+        #{nowType,jdbcType=VARCHAR},
+      </if>
+      <if test="nowName != null" >
+        #{nowName,jdbcType=VARCHAR},
+      </if>
+      <if test="nowTodo != null" >
+        #{nowTodo,jdbcType=VARCHAR},
+      </if>
+      <if test="nowStartTime != null" >
+        #{nowStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nowEndTime != null" >
+        #{nowEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nowNumbers != null" >
+        #{nowNumbers,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.gacl.mapping.beans.Now" >
+    update wx_now
+    <set >
+      <if test="nowType != null" >
+        now_type = #{nowType,jdbcType=VARCHAR},
+      </if>
+      <if test="nowName != null" >
+        now_name = #{nowName,jdbcType=VARCHAR},
+      </if>
+      <if test="nowTodo != null" >
+        now_todo = #{nowTodo,jdbcType=VARCHAR},
+      </if>
+      <if test="nowStartTime != null" >
+        now_start_time = #{nowStartTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nowEndTime != null" >
+        now_end_time = #{nowEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nowNumbers != null" >
+        now_numbers = #{nowNumbers,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where now_id = #{nowId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weixin.gacl.mapping.beans.Now" >
+    update wx_now
+    set now_type = #{nowType,jdbcType=VARCHAR},
+      now_name = #{nowName,jdbcType=VARCHAR},
+      now_todo = #{nowTodo,jdbcType=VARCHAR},
+      now_start_time = #{nowStartTime,jdbcType=VARCHAR},
+      now_end_time = #{nowEndTime,jdbcType=VARCHAR},
+      now_numbers = #{nowNumbers,jdbcType=VARCHAR}
+    where now_id = #{nowId,jdbcType=VARCHAR}
+  </update>
+</mapper>

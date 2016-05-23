@@ -8,6 +8,8 @@
 
 package com.weixin.gacl.manager.interfaces;
 
+import com.weixin.gacl.mapping.beans.User;
+
 /**
  * @ClassName: UserService
  * @Description: TODO(用户操作实现类)
@@ -18,5 +20,9 @@ public interface UserManager {
 
 	boolean isUser(String username);
 	
-	void insertUser(String username);
+	boolean addUser(String username);
+	
+	User queryUser(String username);
+	
+	boolean updateUser(String id,String username,String password);
 }

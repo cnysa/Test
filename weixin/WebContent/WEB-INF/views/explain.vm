@@ -1,0 +1,34 @@
+#set($layout = "layout/cjcx.vm")
+<div class="hd">
+    <h1 class="page_title" style="text-align:center;color:#FF7F00;">关于我们</h1>
+</div>
+<div class="bd">
+    <article class="weui_article">
+    <section>
+        <div class="weui_media_bd">
+                    <h4 class="weui_media_title">关于绑定学号</h4>
+                    <p class="weui_media_desc">请点击底部按钮</p>
+        </div>
+        </section>
+        <section>
+        <div class="weui_media_bd">
+                    <h4 class="weui_media_title">关于查询联系方式</h4>
+                    <p class="weui_media_desc">点击菜单栏的 <a style="color:red;">T帮帮</a> 中的 <a style="color:red;">各种电话</a> 或者   可以直接回复 <a style="color:red;">#关键字</a> 查询。如果您有某位老师的联系方式而我们没有，请您直接回复老师的名字及其联系方式，我们会核实后录入系统，感谢您的帮助！</p>
+        </div>
+        </section>
+	<section>
+        <div class="weui_media_bd">
+        			<h4 class="weui_media_title">关于我们</h4>
+                    <p class="weui_media_desc">非常感谢您对本平台的支持与关注，希望您能在本平台找到您心仪的功能。本平台服务于齐鲁工业大学信息学院全体师生，拥有较强的人员号召力度并且以众多先进技术作为支撑。如果您对本平台的发展有一定的建议，如果您对平台的页面设置以及部分功能有更好的理解，如果您想将您的大作在平台即时发布，如果您想来本平台一展您才华，请您：稿件请编辑邮件发送至<a style="color:red;">315316371@qq.com</a>（来信请注明您的姓名和基本联系方式。）</p>
+        </div>
+        </section>
+        
+    </article>
+    <div class="weui_msg">
+    <div class="weui_opr_area">
+        <p class="weui_btn_area">
+            <a href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=$!appid&redirect_uri=$!weburl&response_type=code&scope=snsapi_base&state=123#wechat_redirect" class="weui_btn weui_btn_primary">绑定</a>
+        </p>
+    </div>
+</div>
+</div>

@@ -1,0 +1,90 @@
+#set($layout = "layout/cjcx.vm")
+<body>
+<div class="weui_cells">
+#if($!{status} == 0)
+<p>当前无投票活动！</p>
+#else
+<div><p style="text-align:center;">$!{voteName}</p></div>
+<div class="weui_cells_title">时间：$!{voteStartTime} 至 $!{voteEndTime}</div>
+<div class="weui_cells_title">类型：$!{voteType}</div>
+<div class="weui_cells_title">选择：$!{voteNumbers}个</div>
+	#if($!{voteNumbers} != "1")
+	<div class="weui_cells weui_cells_checkbox">
+	</div>
+	#else
+	<div class="weui_cells weui_cells_radio">
+	</div>
+	#end
+	<div class="weui_opr_area">
+        <p class="weui_btn_area">
+            <a class="weui_btn weui_btn_primary" onClick="submit();">提交</a>
+        </p>
+    </div>
+#end
+</div>
+<script type = "text/javascript" >
+$(function () {
+	var str = "";
+	if($!{voteNumbers} > 1){
+		#foreach($!temp in $!voteTodo)
+		str +=
+			"<label class='weui_cell weui_check_label' for='s$velocityCount'>"+
+	    "<div class='weui_cell_hd'>"+
+	      "<input type='checkbox' class='weui_check' name='checkbox1' onClick='chang(this);' id='s$velocityCount' value="+$!{temp}.name+">"+
+	      "<i class='weui_icon_checked'></i>"+
+	    "</div>"+
+	    "<div class='weui_cell_bd weui_cell_primary'>"+
+	      "<p>"+$!{temp}.name+"</p>"+
+	    "</div>"+
+	  "</label>";
+	  	#end
+	  $(".weui_cells_checkbox").html(str);
+	}else{
+	#foreach($!temp in $!voteTodo)
+	str +=
+  	"<label class='weui_cell weui_check_label' for='x$velocityCount'>"+
+    "<div class='weui_cell_bd weui_cell_primary'>"+
+      "<p>"+$!{temp}.name+"</p>"+
+   " </div>"+
+    "<div class='weui_cell_ft'>"+
+      "<input type='radio' class='weui_check' name='radio1' id='x$velocityCount' value="+$!{temp}.name+">"+
+      "<span class='weui_icon_checked'></span>"+
+   " </div>"+
+  "</label>";
+  	#end
+  $(".weui_cells_radio").html(str);
+	}
+});
+
+function chang(obj){
+	if($("input[type='checkbox']:checked").length > $!{voteNumbers}){
+		obj.checked = false;
+		$.alert("最多选择$!{voteNumbers}个");
+	}
+}
+
+function submit(){
+	if($!{voteNumbers} > 1){
+		 var obj=document.getElementsByName('checkbox1');
+		 var s='';
+		 for(var i=0; i<obj.length; i++){    
+		    if(obj[i].checked)
+		    	s+=obj[i].value+',';  
+		  }
+		 if(s == "" || s == null){
+			 $.alert("请至少选择一项！");
+			 return;
+		 }
+		 location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=$!{appid}&redirect_uri=$!{weburl}&response_type=code&scope=snsapi_base&state="+
+				 s+"&connect_redirect=1#wechat_redirect";
+	}else{
+		var s = $('input:radio:checked').val();
+		if(s == "" || s == null){
+			 $.alert("请选择一项！");
+			 return;
+		 }
+		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=$!{appid}&redirect_uri=$!{weburl}&response_type=code&scope=snsapi_base&state="+
+		 s+"&connect_redirect=1#wechat_redirect";
+	}
+}
+</script>

@@ -16,11 +16,11 @@ import com.weixin.server.util.WeixinUtil;
  */
 public class TokenThread implements Runnable {
 	private static Logger log = LoggerFactory.getLogger(TokenThread.class);  
-    // 第三方用户唯一凭证  
     public static String appid = "";  
-    // 第三方用户唯一凭证密钥  
     public static String appsecret = "";  
-    public static AccessToken accessToken = null;  
+    public static String weburl = "";
+    public static String token = "";
+    public static AccessToken accessToken = null;
   
     /**
      * 
@@ -30,25 +30,25 @@ public class TokenThread implements Runnable {
      * @date: 2016年3月2日下午7:10:11
      */
     public void run() {
+    	log.debug("进入run()");
     	accessToken = WeixinUtil.getAccessToken(appid, appsecret);
         if (null != accessToken) {
-			int result = WeixinUtil.createMenu(MenuManager.getMenu(null,null,null,null,null,null,null), accessToken.getToken());
+			int result = WeixinUtil.createMenu(MenuManager.getMenu(null,null,null,null,null,null,null,null,null), accessToken.getToken());
 			if (0 == result){
-				log.info("菜单创建成功！");
+				log.info("事务 {}","菜单创建成功");
 			}else{
-				log.info("菜单创建失败，错误码：" + result);
-				log.info("服务结束！");
+				log.error("事务 {} 错误码 {}","菜单创建失败",result);
 			}
 		}
         while (true) {  
             try {
             	accessToken = WeixinUtil.getAccessToken(appid, appsecret);
                 if (null != accessToken) {  
-                    log.info("获取access_token成功，有效时长{}秒 token:{}", accessToken.getExpiresIn(), accessToken.getToken());  
-                    log.info("开始休眠7000秒");   
+                    log.info("事务 获取access_token成功，有效时长{}秒 token:{}", accessToken.getExpiresIn(), accessToken.getToken());  
+                    log.info("事务 开始休眠7000秒");   
                     Thread.sleep((accessToken.getExpiresIn() - 200) * 1000);  
                 } else {  
-                    log.info("获取access_token失败，60秒后再获取");  
+                    log.error("获取access_token失败，60秒后再获取");  
                     Thread.sleep(60 * 1000);  
                 }  
             } catch (InterruptedException e) {  
@@ -59,7 +59,7 @@ public class TokenThread implements Runnable {
                 }  
                 log.error("{}", e);  
             }  
-        }  
+        }
     }
     
 }

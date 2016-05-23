@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.core.util.QuickWriter;
@@ -30,7 +32,7 @@ import com.weixin.server.message.resp.RespTextMessage;
  * @date 2016年3月3日下午6:55:49
  */
 public class MessageUtil {
-
+	private static Logger log = LoggerFactory.getLogger(MessageUtil.class);
 	/**
 	 * 返回消息类型：文本
 	 */
@@ -107,6 +109,7 @@ public class MessageUtil {
 	 */
 	@SuppressWarnings("unchecked")
 	public static Map<String, String> parseXml(HttpServletRequest request) throws Exception {
+		log.debug("进入parseXml()");
 		// 将解析结果存储在HashMap中
 		Map<String, String> map = new HashMap<String, String>();
 
@@ -128,6 +131,7 @@ public class MessageUtil {
 		inputStream.close();
 		inputStream = null;
 
+		log.debug("离开parseXml()");
 		return map;
 	}
 
@@ -137,7 +141,9 @@ public class MessageUtil {
 	 * @return xml
 	 */
 	public static String textMessageToXml(RespTextMessage textMessage) {
+		log.debug("进入textMessageToXml()");
 		xstream.alias("xml", textMessage.getClass());
+		log.debug("离开textMessageToXml()");
 		return xstream.toXML(textMessage);
 	}
 
@@ -147,7 +153,9 @@ public class MessageUtil {
 	 * @return xml
 	 */
 	public static String musicMessageToXml(RespMusicMessage musicMessage) {
+		log.debug("进入musicMessageToXml()");
 		xstream.alias("xml", musicMessage.getClass());
+		log.debug("离开musicMessageToXml()");
 		return xstream.toXML(musicMessage);
 	}
 
@@ -157,8 +165,10 @@ public class MessageUtil {
 	 * @return xml
 	 */
 	public static String newsMessageToXml(RespNewsMessage newsMessage) {
+		log.debug("进入newsMessageToXml()");
 		xstream.alias("xml", newsMessage.getClass());
 		xstream.alias("item", new Article().getClass());
+		log.debug("离开newsMessageToXml()");
 		return xstream.toXML(newsMessage);
 	}
 
@@ -167,6 +177,8 @@ public class MessageUtil {
 	 */
 	private static XStream xstream = new XStream(new XppDriver() {
 		public HierarchicalStreamWriter createWriter(Writer out) {
+			log.debug("进入createWriter()");
+			log.debug("离开createWriter()");
 			return new PrettyPrintWriter(out) {
 				// 对所有xml节点的转换都增加CDATA标记
 				boolean cdata = true;

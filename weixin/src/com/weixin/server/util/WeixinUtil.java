@@ -47,8 +47,8 @@ public class WeixinUtil {
 	 * @return
 	 */
 	public static AccessToken getAccessToken(String appid, String appsecret) {
+		log.debug("进入getAccessToken(appid={},appsecret={})",appid,appsecret);
 		AccessToken accessToken = null;
-
 		String requestUrl = access_token_url.replace("APPID", appid).replace("APPSECRET", appsecret);
 		JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 		// 如果请求成功
@@ -63,6 +63,7 @@ public class WeixinUtil {
 				log.error("获取token失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
 			}
 		}
+		log.debug("离开getAccessToken()");
 		return accessToken;
 	}
 
@@ -75,17 +76,17 @@ public class WeixinUtil {
 	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
 	 */
 	public static JSONObject httpRequest(String requestUrl, String requestMethod, String outputStr) {
+		log.debug("进入httpRequest()");
 		JSONObject jsonObject = null;
 		StringBuffer buffer = new StringBuffer();
 		try {
-			log.info("！--向服务器发送https请求开始--！");
-			log.info("创建SSLContext对象，并使用我们指定的信任管理器初始化");
+			log.info("向服务器发送https请求");
+			//创建SSLContext对象，并使用我们指定的信任管理器初始化
 			TrustManager[] tm = { new MyX509TrustManager() };
 			SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
 			sslContext.init(null, tm, new java.security.SecureRandom());
 			// 从上述SSLContext对象中得到SSLSocketFactory对象
 			SSLSocketFactory ssf = sslContext.getSocketFactory();
-
 			URL url = new URL(requestUrl);
 			HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
 			httpUrlConn.setSSLSocketFactory(ssf);
@@ -99,10 +100,9 @@ public class WeixinUtil {
 //			}else{
 //				httpUrlConn.setRequestMethod("GET"); //使用get请求
 //			}
-
-			if ("GET".equalsIgnoreCase(requestMethod))
+			if ("GET".equalsIgnoreCase(requestMethod)){
 				httpUrlConn.connect();
-
+			}
 			// 当有数据需要提交时
 			if (null != outputStr) {
 				OutputStream outputStream = httpUrlConn.getOutputStream();
@@ -110,7 +110,6 @@ public class WeixinUtil {
 				outputStream.write(outputStr.getBytes("UTF-8"));
 				outputStream.close();
 			}
-
 			// 将返回的输入流转换成字符串
 			InputStream inputStream = httpUrlConn.getInputStream();
 			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
@@ -132,7 +131,7 @@ public class WeixinUtil {
 		} catch (Exception e) {
 			log.error("https request error:{}", e);
 		}
-		log.info("！--向服务器请求key结束--！");
+		log.debug("离开httpRequest()");
 		return jsonObject;
 	}
 	

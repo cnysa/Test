@@ -20,14 +20,16 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
-//		log.info("===========HandlerInterceptor1 preHandle");
 		UserInSession userInSession = (UserInSession) request.getSession(true)
                 .getAttribute("userInSession");
+		log.debug("进入preHandle()");
 		boolean iscontain = true;
 		String uri = request.getRequestURI(); 
 		String contextPath = request.getContextPath();
-		log.info("url: "+uri);
+		log.info("请求链接 {}",uri);
 		if(uri.contains("css") || uri.contains("images") || uri.contains("js") || uri.contains("listen")||uri.contains("wx")){
+			log.info("资源请求或微信访问");
+			log.debug("离开preHandle()");
 			return true;
 		}
 		if(uri.contains("/login")){
@@ -38,40 +40,27 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter {
 		// 必须是登录后的才能访问
         if (iscontain) {
             if (userInSession != null && userInSession.getLogged()) {
+            	log.info("登陆用户{}",userInSession.getId());
+            	log.debug("离开preHandle()");
                 return true;
             }else {
                 StringBuilder url = new StringBuilder();
-//                String reUrl = getReturnUrl(request);
-//                log.info("重定向url1："+reUrl);
-//                StringBuilder param=new StringBuilder();
                 //未登录重定向
                 url.append(contextPath).append("/loginPage.htm");
-//                if (StringUtils.isNotBlank(reUrl)) {
-//                    param.append("?reUrl=").append(reUrl);
-//                }
-//                if(param.length()!=0){
-//                    url.append(param);
-//                }
                 response.sendRedirect(url.toString());
+                log.debug("离开preHandle()");
                 return false;
             }
         }else {// 必须是未登录的才能访问
             if (userInSession == null || !userInSession.getLogged()) {
+            	log.debug("离开preHandle()");
                 return true;
             }else {
             	StringBuilder url = new StringBuilder();
-//                String reUrl = getReturnUrl(request);
-//                log.info("重定向url："+reUrl);
-//                StringBuilder param=new StringBuilder();
                 //未登录重定向
                 url.append(contextPath).append("/home.htm");
-//                if (StringUtils.isNotBlank(reUrl)) {
-//                    param.append("?reUrl=").append(reUrl);
-//                }
-//                if(param.length()!=0){
-//                    url.append(param);
-//                }
                 response.sendRedirect(url.toString());
+                log.debug("离开preHandle()");
                 return false;
             }
         }
@@ -81,14 +70,12 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-//		log.info("===========HandlerInterceptor1 postHandle");  
 	}
 	
 	@Override
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
-//		log.info("===========HandlerInterceptor1 afertHandle");  
 	}
 	
 	/**

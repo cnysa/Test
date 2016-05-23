@@ -10,6 +10,7 @@
                     <h4 class="weui_media_title">比赛简介</h4>
                     <p class="weui_media_desc">$!matchs.matchTodo</p>
         </div>
+        </section>
         <section>
 	        <div class="weui_media_bd">
 	              <h4 class="weui_media_title">比赛网址</h4>

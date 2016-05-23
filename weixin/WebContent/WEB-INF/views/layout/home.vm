@@ -6,6 +6,8 @@
 <meta name="author" content="DeathGhost" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
+<link href="js/jedate/skin/jedate.css" rel="stylesheet" type="text/css">
+<script src="js/jedate/jedate.js"></script>
 <!--[if lt IE 9]>
 <script src="js/html5.js"></script>
 <![endif]-->

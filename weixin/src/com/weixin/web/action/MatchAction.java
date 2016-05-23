@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.weixin.gacl.manager.interfaces.MatchManager;
 import com.weixin.gacl.mapping.beans.Match;
+import com.weixin.server.servlets.threads.TokenThread;
 
 /**
  * @ClassName: MatchAction
@@ -39,8 +40,10 @@ public class MatchAction extends BaseAction{
 	
 	@RequestMapping(value="/wx_match")
 	public String wxMatch(final ModelMap model){
+		log.debug("进入wxMatch()");
 		Match[] matchs = matchManagerImpl.queryAll();
 		model.put("matchs", matchs);
+		log.debug("离开wxMatch():{}","match");
 		return "match";
 	}
 	
@@ -48,20 +51,26 @@ public class MatchAction extends BaseAction{
 	public String wxMatchPage(
 			final @RequestParam(value = "matchId", required = true) String matchId,
 			final ModelMap model){
+		log.debug("进入wxMatchPage(matchId={})",matchId);
 		if(matchId == null || matchId.equals("")){
 			model.put("msg", "网络错误");
-			model.put("url", "http://moshangren.imwork.net/weixin/wx_match");
+			model.put("status", "0");
+			model.put("url", TokenThread.weburl+"/weixin/wx_match");
+			log.debug("离开wxMatchPage():{}:{}","result",model.get("msg"));
 			return "result";
 		}
 		Match matchs = matchManagerImpl.queryMatch(matchId);
 		model.put("matchs", matchs);
+		log.debug("离开wxMatchPage():{}","matchWxPage");
 		return "matchWxPage";
 	}
 	
 	@RequestMapping(value="/matchManager")
 	public String matchManager(final ModelMap model){
+		log.debug("进入matchManager()");
 		Match[] matchs = matchManagerImpl.queryAll();
 		model.put("matchs", matchs);
+		log.debug("离开matchManager():{}","matchManager");
 		return "matchManager";
 	}
 	
@@ -69,6 +78,7 @@ public class MatchAction extends BaseAction{
 	public String matchManagerAddPage(
 			final @RequestParam(value = "matchId", required = false) String matchId,
 			final ModelMap model){
+		log.debug("进入matchManagerAddPage(matchId={})",matchId);
 		if(matchId!=null && !matchId.equals("")){
 			model.put("matchId", matchId);
 			Match match = matchManagerImpl.queryMatch(matchId);
@@ -78,6 +88,7 @@ public class MatchAction extends BaseAction{
 			String todo = match.getMatchTodo().replaceAll("<br>","\r\n").replaceAll("&nbsp;"," ").replaceAll("\'","\"");
 			model.put("matchTodo", todo);
 		}
+		log.debug("离开matchManagerAddPage():{}","matchManagerAdd");
 		return "matchManagerAdd";
 	}
 	
@@ -89,24 +100,21 @@ public class MatchAction extends BaseAction{
 			final @RequestParam(value = "matchGroup", required = true) String matchGroup,
 			final @RequestParam(value = "matchId", required = false) String matchId,
 			final ModelMap model){
-		String todo;
-		log.info(matchName);
-		log.info(matchId);
-		log.info(matchUrl);
-		log.info(matchGroup);
-		todo = matchTodo.replaceAll("\\r\\n","<br>").replaceAll(" ","&nbsp;").replaceAll("\"","\'");
-		log.info(todo);
-		log.info("length: "+todo.length());
+		log.debug("进入matchManagerUpdate(matchName="+matchName+",matchTodo="+matchTodo+",matchUrl="+matchUrl+",matchGroup="+matchGroup+",matchId="+matchId+")");
+		String todo = matchTodo.replaceAll("\\r\\n","<br>").replaceAll(" ","&nbsp;").replaceAll("\"","\'");
 		if(matchManagerImpl.queryMatch(matchId)==null){
 			model.put("msg", "比赛信息修改失败！");
+			log.debug("离开matchManagerUpdate():{}:{}","resultAdmin",model.get("msg"));
 			return "resultAdmin";
 		}
 		if(!matchManagerImpl.updateMatch(matchId, matchName, todo, matchUrl, matchGroup)){
 			model.put("msg", "比赛信息修改失败！");
+			log.debug("离开matchManagerUpdate():{}:{}","resultAdmin",model.get("msg"));
 			return "resultAdmin";
 		}
 		Match[] matchs = matchManagerImpl.queryAll();
 		model.put("matchs", matchs);
+		log.debug("离开matchManagerUpdate():{}","matchManager");
 		return "matchManager";
 	}
 	
@@ -117,50 +125,48 @@ public class MatchAction extends BaseAction{
 			final @RequestParam(value = "matchUrl", required = true) String matchUrl,
 			final @RequestParam(value = "matchGroup", required = true) String matchGroup,
 			final ModelMap model){
+		log.debug("进入matchManagerAdd(matchName="+matchName+",matchTodo="+matchTodo+",matchUrl="+matchUrl+",matchGroup="+matchGroup+")");
 		String matchId = UUID.randomUUID().toString();
 		String todo;
 		matchId = matchId.substring(0, 8);
-		log.info(matchName);
-		log.info(matchId);
-		log.info(matchUrl);
-		log.info(matchGroup);
 		todo = matchTodo.replaceAll("\\r\\n","<br>").replaceAll(" ","&nbsp;").replaceAll("\"","\'");
-		log.info(todo);
-		log.info("length: "+todo.length());
 		if(matchManagerImpl.queryMatch(matchId)!=null){
 			model.put("msg", "比赛信息添加失败！");
+			log.debug("离开matchManagerAdd():{}:{}","resultAdmin",model.get("msg"));
 			return "resultAdmin";
 		}
 		if(!matchManagerImpl.addMatch(matchId, matchName, todo, matchUrl, matchGroup)){
 			model.put("msg", "比赛信息添加失败！");
+			log.debug("离开matchManagerAdd():{}:{}","resultAdmin",model.get("msg"));
 			return "resultAdmin";
 		}
 		Match[] matchs = matchManagerImpl.queryAll();
 		model.put("matchs", matchs);
+		log.debug("离开():{}","matchManager");
 		return "matchManager";
 	}
 	
 	@RequestMapping(value="/matchDel", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-	public @ResponseBody String telDel(
+	public @ResponseBody String matchDel(
 			final @RequestParam(value = "matchId", required = true) String matchId,
 			final ModelMap model){
-		log.info(matchId);
+		log.debug("进入matchDel(matchId={})",matchId);
+		
 		Map<String,Object> map=new HashMap<String, Object>();
 		if(matchManagerImpl.queryMatch(matchId) == null){
 			map.put("status", "0");
 			map.put("msg", "删除失败！");
-			log.info("删除失败！");
+			log.debug("离开matchDel(){}",model.get("msg"));
 			return JSONObject.fromObject(map).toString();
 		}
 		if(matchManagerImpl.delMatch(matchId)){
 			map.put("status", "1");
 			map.put("msg", "删除成功！");
-			log.info("删除成功！");
 		}else{
 			map.put("status", "0");
 			map.put("msg", "删除失败！");
-			log.info("删除失败！");
 		}
+		log.debug("离开matchDel(){}",model.get("msg"));
 		return JSONObject.fromObject(map).toString();
 	}
 

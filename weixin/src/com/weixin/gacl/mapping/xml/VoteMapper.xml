@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.weixin.gacl.mapping.dao.VoteMapper" >
+  <resultMap id="BaseResultMap" type="com.weixin.gacl.mapping.beans.Vote" >
+    <id column="vote_id" property="voteId" jdbcType="VARCHAR" />
+    <result column="vote_user_id" property="voteUserId" jdbcType="VARCHAR" />
+    <result column="vote_user_time" property="voteUserTime" jdbcType="VARCHAR" />
+    <result column="vote_user_number" property="voteUserNumber" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    vote_id, vote_user_id, vote_user_time, vote_user_number
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wx_now_vote
+    where vote_id = #{voteId,jdbcType=VARCHAR}
+  </select>
+  <select id="findAll" resultMap="BaseResultMap">
+  select * from wx_now_vote
+ 	</select>
+ 	<select id="findForId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select * from wx_now_vote where vote_user_id = #{voteUserId,jdbcType=VARCHAR}
+ 	</select>
+   <select id="findOnlyAll" resultType="java.lang.Integer" parameterType="java.lang.String">
+  select count(*) from wx_now_vote where vote_user_number = #{voteUserNumber,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from wx_now_vote
+    where vote_id = #{voteId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.weixin.gacl.mapping.beans.Vote" >
+    insert into wx_now_vote (vote_id, vote_user_id, vote_user_time, 
+      vote_user_number)
+    values (#{voteId,jdbcType=VARCHAR}, #{voteUserId,jdbcType=VARCHAR}, #{voteUserTime,jdbcType=VARCHAR}, 
+      #{voteUserNumber,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.weixin.gacl.mapping.beans.Vote" >
+    insert into wx_now_vote
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="voteId != null" >
+        vote_id,
+      </if>
+      <if test="voteUserId != null" >
+        vote_user_id,
+      </if>
+      <if test="voteUserTime != null" >
+        vote_user_time,
+      </if>
+      <if test="voteUserNumber != null" >
+        vote_user_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="voteId != null" >
+        #{voteId,jdbcType=VARCHAR},
+      </if>
+      <if test="voteUserId != null" >
+        #{voteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="voteUserTime != null" >
+        #{voteUserTime,jdbcType=VARCHAR},
+      </if>
+      <if test="voteUserNumber != null" >
+        #{voteUserNumber,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.weixin.gacl.mapping.beans.Vote" >
+    update wx_now_vote
+    <set >
+      <if test="voteUserId != null" >
+        vote_user_id = #{voteUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="voteUserTime != null" >
+        vote_user_time = #{voteUserTime,jdbcType=VARCHAR},
+      </if>
+      <if test="voteUserNumber != null" >
+        vote_user_number = #{voteUserNumber,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vote_id = #{voteId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.weixin.gacl.mapping.beans.Vote" >
+    update wx_now_vote
+    set vote_user_id = #{voteUserId,jdbcType=VARCHAR},
+      vote_user_time = #{voteUserTime,jdbcType=VARCHAR},
+      vote_user_number = #{voteUserNumber,jdbcType=VARCHAR}
+    where vote_id = #{voteId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,139 @@
+#set($layout = "layout/home.vm")
+#set($currentPage="5")
+<style type="text/css">
+ input {border:0; 
+ 	width:100%; 
+ 	text-align:center; 
+     } 
+</style>
+<section class="rt_wrap content mCustomScrollbar">
+	<form action="$rc.contextPath/nowVoteAdd.htm">
+	<input type="hidden" class="numcount" name="numcount" />
+      <h2><strong style="color:grey;">发起投票</strong></h2>
+      <ul class="ulColumn2">
+       <li>
+        <span class="item_name" style="width:120px;">投票说明：</span>
+        <textarea placeholder="投票说明" class="textarea" style="width:500px;height:100px;" name="todo"></textarea>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">类型：</span>
+        <select class="select selectype" name="selectype">
+         <option value='-1'>选择类型</option>
+         <option value='0'>每人投一次票</option>
+         <option value='1'>每人每天投一次票</option>
+        </select>
+       </li>
+       <li>
+       <span class="item_name" class="wstxt"  style="width:120px;">开始日期：</span><input type="text" style="border:1px solid;width:120px;" class="workinput wicon mr25" id="inpstart" name="timestart" readonly>
+		<span  class="item_name" class="wstxt"  style="width:120px;">结束日期：</span><input type="text" style="border:1px solid;width:120px;" class="workinput wicon mr25" id="inpend" name="timeend" readonly>
+       </li>
+       <li>
+<!--        style="margin-left:125px;width:520px;" -->
+		<span class="item_name" style="width:120px;">添加选项：</span>
+       	<table class="table voteList" style="margin-left:125px;width:520px;">
+	 	</table>
+       </li>
+       <li>
+       	<span class="item_name" style="width:120px;"></span>
+       	<input style="border:0;width:260px;" type="button" value="确认选项" class="submit_btn" onclick="ok();"/>
+		<input style="border:0;width:260px;" type="button" value="添加选项" class="submit_btn" onclick="add();"/>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;">每人可投个数：</span>
+		<select class="select numselect" name="numselect">
+         <option value='-1'>每人每次可投个数</option>
+        </select>
+       </li>
+       <li>
+        <span class="item_name" style="width:120px;"></span>
+        <input style="border:0;width:520px;" type="button" class="link_btn" value="提交" onclick="submi();"/>
+       </li>
+      </ul>
+      </form>
+      <div style="height:500px">
+		</div>
+     </section>
+<script type = "text/javascript" >
+var count = 0;
+$(function () {
+});
+function add(){
+	if($(".addIn").val() == ""){
+		alert("不允许空值！");
+		return;
+	}
+	$(".addIn").css("border","0").attr("readOnly","true").removeClass("addIn");
+	var str = "<tr>"+
+	"<td><div><input class='addIn' type='text' value='' name="+200+count+" /></div></td>"+
+	"<td class='center'><a class='inner_btn' isupdata='0' onclick='del(this);'>删除</a>"+
+	"</td>"+
+  	"</tr>";
+	$(".voteList").append(str);
+	$(".addIn").css("border","1px solid");
+	count++;
+	$(".numselect").append("<option class='numoption' value="+count+">"+count+"</option>");
+}
+
+function ok(){
+	if($(".addIn").val() == ""){
+		alert("不允许空值！");
+		return;
+	}
+	$(".addIn").css("border","0").attr("readOnly","true").removeClass("addIn");
+}
+
+function del(obj){
+	$(obj).parent().parent().remove();
+	$(".numoption").each(function(index,obj) {
+	 	if($(obj).val() == count){
+	 		$(obj).remove();
+	 	}
+	 });
+	count--;
+}
+
+function submi(){
+	$(".numcount").val(count);
+	if($("textarea").val() == ""){
+		alert("请填写投票说明！");return;
+	}
+	if($(".selectype").val() == "-1"){
+		alert("请选择类型！");return;
+	}
+	if($(".numcount").val() == "0"){
+		alert("请添加选项！");return;
+	}
+	if($("input").hasClass("addIn")){
+		alert("请确认选项！");return;
+	}
+	if($(".numselect").val() == "-1"){
+		alert("请选择每人每次投票个数！");return;
+	}
+	$("form").submit();
+}
+
+var start = {
+	    dateCell: '#inpstart',
+		format: 'YYYY-MM-DD',
+	    minDate: jeDate.now(0), //设定最小日期为当前日期
+		festival:true,
+		maxDate: '2099-06-16', //最大日期
+	    isTime: false,
+	    choosefun: function(datas){
+	         end.minDate = datas; //开始日选好后，重置结束日的最小日期
+	    }
+	};
+	var end = {
+	    dateCell: '#inpend',
+	    format: 'YYYY-MM-DD',
+	    minDate: jeDate.now(0), //设定最小日期为当前日期
+		festival:true,
+	    maxDate: '2099-06-16', //最大日期
+	    isTime: false,
+	    choosefun: function(datas){
+	         start.maxDate = datas; //将结束日的初始值设定为开始日的最大日期
+	    }
+	};
+	jeDate(start);
+	jeDate(end);
+</script>

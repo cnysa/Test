@@ -6,13 +6,13 @@
     <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">学号</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" name="username" type="number" pattern="[0-9]*" #if($username) value="$username" #end placeholder="请输入学号"/>
+            <input class="weui_input" name="username" type="number" pattern="[0-9]{12}" #if($username) value="$!username" #end placeholder="请输入学号"/>
         </div>
     </div>
     <div class="weui_cell">
         <div class="weui_cell_hd"><label class="weui_label">密码</label></div>
         <div class="weui_cell_bd weui_cell_primary">
-            <input class="weui_input" name="password" type="password" pattern="[0-9a-zA-Z#%*]*" placeholder="请输入密码"/>
+            <input class="weui_input" name="password" type="password" pattern="[0-9a-zA-Z#%*]*" #if($password) value="$!password" #end placeholder="请输入密码"/>
         </div>
     </div>
 </div>

@@ -37,9 +37,11 @@ public class TelcxAction extends BaseAction{
 	private TelManager telManagerImpl;
 	
 	@RequestMapping(value="/wx_tel")
-	public String cjcx(final ModelMap model){
+	public String wxTel(final ModelMap model){
+		log.debug("进入wxTel()");
 		Tel[] tels = telManagerImpl.queryAll();
 		model.put("tels", tels);
+		log.debug("离开wxTel():{}","tel");
 		return "tel";
 	}
 	
@@ -47,23 +49,22 @@ public class TelcxAction extends BaseAction{
 	public @ResponseBody String telDel(
 			final @RequestParam(value = "telName", required = true) String telName,
 			final ModelMap model){
-		log.info(telName);
+		log.debug("进入telDel(telName={})",telName);
 		Map<String,Object> map=new HashMap<String, Object>();
 		if(telManagerImpl.query(telName) == null){
 			map.put("status", "0");
 			map.put("msg", "删除失败！");
-			log.info("删除失败！");
+			log.debug("离开telDel():{}:{}","",model.get("msg"));
 			return JSONObject.fromObject(map).toString();
 		}
 		if(telManagerImpl.delTel(telName)){
 			map.put("status", "1");
 			map.put("msg", "删除成功！");
-			log.info("删除成功！");
 		}else{
 			map.put("status", "0");
 			map.put("msg", "删除失败！");
-			log.info("删除失败！");
 		}
+		log.debug("离开telDel():{}:{}","",model.get("msg"));
 		return JSONObject.fromObject(map).toString();
 	}
 	
@@ -73,9 +74,7 @@ public class TelcxAction extends BaseAction{
 			final @RequestParam(value = "telNnum1", required = true) String telNum1,
 			final @RequestParam(value = "telNnum2", required = true) String telNum2,
 			final ModelMap model){
-		log.info(telName);
-		log.info(telNum1);
-		log.info(telNum2);
+		log.debug("进入telUpdate(telName="+telName+", telNnum1="+telNum1+", telNnum2="+telNum2+")");
 		Map<String,Object> map=new HashMap<String, Object>();
 		String num = telName;
 		String num1 = telNum1;
@@ -83,7 +82,7 @@ public class TelcxAction extends BaseAction{
 		if(num.equals("") || telManagerImpl.query(telName) == null){
 			map.put("status", "0");
 			map.put("msg", "修改失败！");
-			log.info("修改失败！");
+			log.debug("离开telUpdate():{}:{}","",model.get("msg"));
 			return JSONObject.fromObject(map).toString();
 		}
 		if(num1.equals("")){
@@ -95,12 +94,11 @@ public class TelcxAction extends BaseAction{
 		if(telManagerImpl.update(num, num1, num2)){
 			map.put("status", "1");
 			map.put("msg", "修改成功！");
-			log.info("修改成功！");
 		}else{
 			map.put("status", "0");
 			map.put("msg", "修改失败！");
-			log.info("修改失败！");
 		}
+		log.debug("离开telUpdate():{}:{}","",model.get("msg"));
 		return JSONObject.fromObject(map).toString();
 	}
 	
@@ -110,9 +108,7 @@ public class TelcxAction extends BaseAction{
 			final @RequestParam(value = "telNnum1", required = true) String telNum1,
 			final @RequestParam(value = "telNnum2", required = true) String telNum2,
 			final ModelMap model){
-		log.info(telName);
-		log.info(telNum1);
-		log.info(telNum2);
+		log.debug("进入telAdd(telName="+telName+", telNum1="+telNum1+", telNum2="+telNum2+")");
 		Map<String,Object> map=new HashMap<String, Object>();
 		String num = telName;
 		String num1 = telNum1;
@@ -120,7 +116,7 @@ public class TelcxAction extends BaseAction{
 		if(num.equals("") || telManagerImpl.query(telName) != null){
 			map.put("status", "0");
 			map.put("msg", "添加失败！");
-			log.info("添加失败！");
+			log.debug("离开telAdd():{}:{}","",model.get("msg"));
 			return JSONObject.fromObject(map).toString();
 		}
 		if(num1.equals("")){
@@ -132,19 +128,20 @@ public class TelcxAction extends BaseAction{
 		if(telManagerImpl.addTel(num, num1, num2)){
 			map.put("status", "1");
 			map.put("msg", "添加成功！");
-			log.info("添加成功！");
 		}else{
 			map.put("status", "0");
 			map.put("msg", "添加失败！");
-			log.info("添加失败！");
 		}
+		log.debug("离开telAdd():{}:{}","",model.get("msg"));
 		return JSONObject.fromObject(map).toString();
 	}
 	
 	@RequestMapping(value="/telManager")
 	public String telManage(final ModelMap model){
+		log.debug("进入telManage()");
 		Tel[] tels = telManagerImpl.queryAll();
 		model.put("tels", tels);
+		log.debug("离开telManage():{}","telManager");
 		return "telManager";
 	}
 	

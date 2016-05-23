@@ -1,10 +1,14 @@
 package com.weixin.server.Manager;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.weixin.server.Manager.pojo.Button;
 import com.weixin.server.Manager.pojo.CommonButton;
 import com.weixin.server.Manager.pojo.ComplexButton;
 import com.weixin.server.Manager.pojo.Menu;
 import com.weixin.server.Manager.pojo.ViewButton;
+import com.weixin.server.servlets.threads.TokenThread;
 import com.weixin.server.util.EnumManager;
 
 /**
@@ -15,7 +19,8 @@ import com.weixin.server.util.EnumManager;
  * @date 2016年3月11日上午11:48:50
  */
 public class MenuManager {
-
+	
+	private static Logger log = LoggerFactory.getLogger(MenuManager.class);
 	/**
 	 * 
 	 * @Title: getMenu 
@@ -24,7 +29,8 @@ public class MenuManager {
 	 * @author: zhanggd16816
 	 * @date: 2016年3月11日上午11:58:11
 	 */
-	public static Menu getMenu(String url12,String url13,String url14,String url22,String url23,String url25,String url34) {
+	public static Menu getMenu(String url12,String url13,String url14,String url22,String url23,String url24,String url25,String url32,String url34) {
+		log.debug("进入getMenu()");
 		CommonButton btn11 = new CommonButton();
 		btn11.setName(EnumManager.MENU_XYJJ.getRespMsg());
 		btn11.setType("click");
@@ -58,56 +64,60 @@ public class MenuManager {
 			btn14.setUrl(url14);
 		}
 		
-
 		ViewButton btn22 = new ViewButton();
 		btn22.setName(EnumManager.MENU_ZYJS.getRespMsg());
 		btn22.setType("view");
 		if(null == url22){
-			btn22.setUrl("http://moshangren.imwork.net/weixin/wx_match");
+			btn22.setUrl(TokenThread.weburl+"/weixin/wx_match");
 		}else{
 			btn22.setUrl(url22);
 		}
 
+//		String cjcxUrl = TokenThread.weburl+"/weixin/wx_cjcx";
+		String cjcxUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="+TokenThread.appid+"&redirect_uri="+TokenThread.weburl+"/weixin/wx_cjcx.htm&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+		System.out.println(cjcxUrl);
 		ViewButton btn23 = new ViewButton();
 		btn23.setName(EnumManager.MENU_CJCX.getRespMsg());
 		btn23.setType("view");
 		if(null == url23){
-			btn23.setUrl("http://moshangren.imwork.net/weixin/wx_cjcx");
+			btn23.setUrl(cjcxUrl);
 		}else{
 			btn23.setUrl(url23);
 		}
 		
-
-		CommonButton btn24 = new CommonButton();
-		btn24.setName(EnumManager.MENU_YKTCZ.getRespMsg());
-		btn24.setType("click");
-		btn24.setKey(EnumManager.MENU_YKTCZ.getRespCode());
+		ViewButton btn24 = new ViewButton();
+		btn24.setName(EnumManager.MENU_TSCX.getRespMsg());
+		btn24.setType("view");
+		btn24.setUrl(EnumManager.MENU_TSCX.getRespCode());
+		if(null == url24){
+			btn24.setUrl("http://m.5read.com/634");
+		}else{
+			btn24.setUrl(url24);
+		}
 		
 		ViewButton btn25 = new ViewButton();
 		btn25.setName(EnumManager.MENU_LSLXFS.getRespMsg());
 		btn25.setType("view");
 		if(null == url25){
-			btn25.setUrl("http://moshangren.imwork.net/weixin/wx_tel");
+			btn25.setUrl(TokenThread.weburl+"/weixin/wx_tel");
 		}else{
 			btn25.setUrl(url25);
 		}
 		
-
-		CommonButton btn31 = new CommonButton();
-		btn31.setName(EnumManager.MENU_BBQ.getRespMsg());
-		btn31.setType("click");
-		btn31.setKey(EnumManager.MENU_BBQ.getRespCode());
-
-		CommonButton btn32 = new CommonButton();
+		ViewButton btn32 = new ViewButton();
 		btn32.setName(EnumManager.MENU_DQHD.getRespMsg());
-		btn32.setType("click");
-		btn32.setKey(EnumManager.MENU_DQHD.getRespCode());
+		btn32.setType("view");
+		if(null == url32){
+			btn32.setUrl(TokenThread.weburl+"/weixin/wx_vote");
+		}else{
+			btn32.setUrl(url34);
+		}
 		
 		ViewButton btn34 = new ViewButton();
 		btn34.setName(EnumManager.MENU_SYBZ.getRespMsg());
 		btn34.setType("view");
 		if(null == url34){
-			btn34.setUrl("http://www.baidu.com/");
+			btn34.setUrl(TokenThread.weburl+"/weixin/wx_explain");
 		}else{
 			btn34.setUrl(url34);
 		}
@@ -123,11 +133,11 @@ public class MenuManager {
 
 		ComplexButton mainBtn3 = new ComplexButton();
 		mainBtn3.setName("T娱乐");
-		mainBtn3.setSub_button(new Button[] { btn31, btn32, btn34 });
+		mainBtn3.setSub_button(new Button[] { btn32, btn34 });
 
 		Menu menu = new Menu();
 		menu.setButton(new Button[] { mainBtn1, mainBtn2, mainBtn3 });
-
+		log.debug("离开getMenu()");
 		return menu;
 	}
 }

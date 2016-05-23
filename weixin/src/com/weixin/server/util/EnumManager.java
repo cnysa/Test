@@ -12,11 +12,14 @@ public enum EnumManager {
     MENU_Xl("21","校历"),
     MENU_ZYJS("22","专业竞赛"),
     MENU_CJCX("23","成绩查询"),
-    MENU_YKTCZ("24","一卡通充值"),
+    MENU_TSCX("24","图书查询"),
     MENU_LSLXFS("25","各种电话"),
     MENU_BBQ("31","表白墙"),
-    MENU_DQHD("32","当前活动"),
-    MENU_SYBZ("33","使用帮助")
+    MENU_DQHD("32","当前投票"),
+    MENU_SYBZ("33","使用帮助"),
+    
+    NOW_VOTE_TYPE_ONLY("0","每个账号一票"),
+    NOW_VOTE_TYPE_DAY_ONLY("1","每个账号每天一票"),
     
     ;
     /**

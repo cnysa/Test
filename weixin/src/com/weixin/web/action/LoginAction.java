@@ -22,7 +22,8 @@ public class LoginAction extends BaseAction{
 	@RequestMapping(value="/loginPage")
 	public String loginPage(
 			final ModelMap model) {
-		logger.info("========loginPage");
+		log.debug("进入loginPage()");
+		log.debug("离开loginPage()");
 		return "login";
 	}
 	
@@ -32,25 +33,30 @@ public class LoginAction extends BaseAction{
 			final @RequestParam(value = "password", required = true) String password,
 			final @RequestParam(value = "vcode", required = true) String vcode,
 			final ModelMap model){
-		log.info("id:"+id);
-		log.info("password:"+password);
+		log.debug("进入login(id="+id+",password="+password+",vcode="+vcode+")");
 		UserInSession u = null;
-		
 		u = getLoginUser();
 		if (u != null && u.getLogged()) {
+			log.debug("离开login():{}","home");
 			return  "home"; 
 		}
 		if(StringUtils.isEmpty(id.trim()) || StringUtils.isEmpty(password.trim())){
 			model.put("err", "用户名或密码不能为空");
+			log.debug("离开login():{}:{}","login",model.get("err"));
 			return "login";
 		}
 		if(StringUtils.isEmpty(vcode.trim())){
 			model.put("err", "验证码不能为空");
+			log.debug("离开login():{}:{}","login",model.get("err"));
+			return "login";
+		}
+		if((String)getSession().getAttribute("session_vcode") == null ){
+			log.debug("离开login():{}","login");
 			return "login";
 		}
 		if(!vcode.equals(((String)getSession().getAttribute("session_vcode")).toLowerCase())){
-			log.info(getSession().getAttribute("session_vcode"));
 			model.put("err", "验证码不正确");
+			log.debug("离开login():{}:{}","login",model.get("err"));
 			return "login";
 		}
 		if(!adminManagerImpl.verifLofin(id, password)){
@@ -63,18 +69,20 @@ public class LoginAction extends BaseAction{
 		u.setLogged(true);
 		getSession().setAttribute("userInSession", u);
 		model.put("admin", u.getId());
-		
+		log.debug("离开login():{}","home");
 		return "home";
 	}
 	
 	@RequestMapping(value="/logged")
 	public String logged(final ModelMap model){
+		log.debug("进入logged()");
 		UserInSession u = null;
 		u=getLoginUser();
 		if (u != null && u.getLogged()) {
 			u.setLogged(false);
 			getSession().setAttribute("userInSession", null);
 		}
+		log.debug("离开logged():{}","login");
 		return "login";
 	}
 	

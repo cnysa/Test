@@ -26,19 +26,25 @@ public class InitServlet extends HttpServlet {
      * @throws ServletException
      */
     public void init(){
-    	// 获取web.xml中配置的参数  
+    	log.debug("进入init()");
+    	log.info("事务 {}","获取web.xml中配置的参数");
         TokenThread.appid = getInitParameter("appid");  
-        TokenThread.appsecret = getInitParameter("appsecret");  
-  
-        log.info("weixin api appid:{} ", TokenThread.appid);  
-        log.info("weixin api appsecret:{} ", TokenThread.appsecret);  
+        TokenThread.appsecret = getInitParameter("appsecret");
+        TokenThread.weburl = getInitParameter("weburl");
+        TokenThread.token = getInitParameter("token");
+        log.info("事务 {} appid:{} ", "获取参数",TokenThread.appid);  
+        log.info("事务 {} appsecret:{} ", "获取参数",TokenThread.appsecret);
+        log.info("事务 {} weburl:{} ", "获取参数",TokenThread.weburl); 
+        log.info("事务 {} token:{} ", "获取参数",TokenThread.token); 
+        log.info("事务 {}","获取web.xml中配置的参数完成");
   
         if ("".equals(TokenThread.appid) || "".equals(TokenThread.appsecret)) {  
             log.error("appid and appsecret 配置出错，请重新配置");  
         } else {  
-        	log.info("启动定时获取access_token的线程  ");
+        	log.info("事务 {}","启动TokenThread线程  ");
             new Thread(new TokenThread()).start();  
         }
+        log.debug("离开init()");
     }
 
 }

@@ -20,6 +20,14 @@
       <param-name>appsecret</param-name>
       <param-value>d4624c36b6795d1d99dcf0547af5443d</param-value>
     </init-param>
+    <init-param>
+      <param-name>weburl</param-name>
+      <param-value>http://moshangren.imwork.net</param-value>
+    </init-param>
+    <init-param>
+      <param-name>token</param-name>
+      <param-value>test</param-value>
+    </init-param>
     <load-on-startup>0</load-on-startup>
   </servlet>
 <!--   <servlet> -->

@@ -130,7 +130,7 @@ public class HomeAction extends BaseAction{
 				final @RequestParam(value = "openid", required = true) String openid,
 				final ModelMap model) throws IOException{
 			 log.debug("½øÈëwxBing(username="+username+",password="+password+",openid="+openid+")");
-			Map<String,Object> map = CjcxAction.cjcxPost(username,password);
+			Map<String,Object> map = CjcxAction.cjcxPost(username,password,"","");
 			String status = (String)map.get("status");
 			if("0".equals(status)){
 				model.put("msg", "ÍøÂç´íÎó°ó¶¨Ê§°Ü£¡");

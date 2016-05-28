@@ -1,10 +1,33 @@
 #set($layout = "layout/cjcx.vm")
 <body>
-<div class="weui_cells">
-  
+<div class="weui_cells_form">
+  <div class="weui_cell">
+    <div class="weui_cell_hd"><label class="weui_label">选择学期:</label></div>
+    <div class="weui_cell_bd weui_cell_primary">
+      <input class="weui_input" id='picker' type="text" name="xnxq" placeholder = "$!nowXnXq"/>
+    </div>
+    <span><a href="javascript:;" class="weui_btn weui_btn_mini weui_btn_default" onClick="checkField();">查询</a></span>
+  </div>
+</div>
+<div class="weui_cells" style="margin-top:-6px;">
+
 </div>
 <script type = "text/javascript" >
 $(function () {
+	$("#picker").picker({
+		  title: "请选择您的手机",
+		  cols: [
+		    {
+		      textAlign: 'center',
+		      values: [
+						#foreach($temp1 in $xnxq)
+						"$!{temp1}",
+						#end
+		               ]
+		    }
+		  ]
+		});
+	
 	var html = 	"<div class='weui_cell' style='background:#000;color:#FFF'>"+
     "<div class='weui_cell_bd weui_cell_primary'>"+
     "<p>课程</p>"+
@@ -32,4 +55,52 @@ $(function () {
 	#end
 	$(".weui_cells").html(html);
 });
+
+function checkField(){
+	if($("#picker").val() == "")
+		return;
+	var param = $("#picker").val() ;
+	$.post("$rc.contextPath/wx_cjcxXnXq.htm",{xnxq:param,username:$username,password:$password},function(data){
+			var datas = jQuery.parseJSON(data);
+			if(datas.status == "1"){
+				result(datas.result);
+// console.log(datas);
+			}else{
+				$.alert("网络错误！");
+			}
+	     	});
+}
+
+function result(obj){
+	var html = 	"<div class='weui_cell' style='background:#000;color:#FFF'>"+
+    "<div class='weui_cell_bd weui_cell_primary'>"+
+    "<p>课程</p>"+
+  	"</div>"+
+  	"<div class='weui_cell_bd'>"+
+    "成绩"+
+  	"</div>"+
+	"</div>";
+
+	for(var i=0;i<obj.length;i++){
+		if(i!=0){
+			if(i%2 == 1){
+				 html += "<div class='weui_cell' style='background:#cccccc;'>";
+			}else{
+				html += "<div class='weui_cell'>";
+			}
+			
+			html +=
+				"<div class='weui_cell_bd weui_cell_primary'>"+
+			    "<p>"+
+			    obj[i][0]+
+			    "</p>"+
+			  	"</div>"+
+			  	"<div class='weui_cell_ft'>"+
+			  	obj[i][1]+
+			  	"</div>"+
+				"</div>";
+		}
+	}
+	$(".weui_cells").html(html);
+}
 </script>

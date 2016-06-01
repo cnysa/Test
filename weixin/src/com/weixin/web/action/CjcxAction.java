@@ -264,7 +264,6 @@ public class CjcxAction extends BaseAction{
 			// 判断响应实体是否为空
 			if (entity != null) {
 			  String responseString = EntityUtils.toString(entity);
-			  System.out.println(responseString);
 			  result.put("entity", responseString);
 			}else{
 				result.put("entity", null);
@@ -275,7 +274,6 @@ public class CjcxAction extends BaseAction{
 	 
 	 public static String[][] getCjcxResults(String htmlSource) {
 		 	log.debug("进入getResults()");
-		 	log.info(htmlSource);
 			Map<String,String> result = new HashMap<String, String>();
 			int num = 0;
 			Document document = Jsoup.parse(htmlSource);
